@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://dlh8jm3hdtx4r"]
+
+[ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_0lbbv"]
+[ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="2_qvgpj"]
+[ext_resource type="Script" path="res://menus/main_menu/play_button.gd" id="3_yo0qw"]
+[ext_resource type="PackedScene" uid="uid://d0von5qosiwce" path="res://main/main.tscn" id="4_aab6i"]
+[ext_resource type="Script" path="res://menus/main_menu/credits_button.gd" id="5_ivimn"]
+[ext_resource type="PackedScene" uid="uid://bq4omanqn3ps" path="res://menus/credits/credits.tscn" id="6_wv3ci"]
+[ext_resource type="Script" path="res://menus/main_menu/quit_button.gd" id="7_frk4o"]
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Christian" type="Sprite2D" parent="."]
+position = Vector2(165, 90.25)
+scale = Vector2(0.171875, 0.149583)
+texture = ExtResource("1_0lbbv")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 329.0
+offset_bottom = 180.0
+theme = ExtResource("2_qvgpj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "We must obey God as ruler
+rather than men"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+script = ExtResource("3_yo0qw")
+play_scene = ExtResource("4_aab6i")
+
+[node name="Credits" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+script = ExtResource("5_ivimn")
+credits_scene = ExtResource("6_wv3ci")
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+script = ExtResource("7_frk4o")
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Play" to="CenterContainer/VBoxContainer/VBoxContainer/Play" method="_on_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Credits" to="CenterContainer/VBoxContainer/VBoxContainer/Credits" method="_on_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="CenterContainer/VBoxContainer/VBoxContainer/Quit" method="_on_pressed"]

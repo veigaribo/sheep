@@ -1,0 +1,139 @@
+[gd_scene load_steps=16 format=3 uid="uid://d0von5qosiwce"]
+
+[ext_resource type="PackedScene" uid="uid://7n6tlswyxt83" path="res://main/floor/floor.tscn" id="1_bgaf8"]
+[ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
+[ext_resource type="Script" path="res://main/countdown_timer.gd" id="2_urn7t"]
+[ext_resource type="PackedScene" uid="uid://cpxhxf33rf7ws" path="res://corral/corral.tscn" id="3_k1nb5"]
+[ext_resource type="PackedScene" uid="uid://bw2wc8438l8tw" path="res://main/shepherd/shepherd.tscn" id="4_mf255"]
+[ext_resource type="Script" path="res://main/sheep_spawner.gd" id="5_06kpe"]
+[ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="5_7qn0t"]
+[ext_resource type="Script" path="res://main/win_label.gd" id="5_17i2n"]
+[ext_resource type="Script" path="res://main/count_corralled.gd" id="7_bxodf"]
+[ext_resource type="Script" path="res://main/countdown_label.gd" id="8_kq1cb"]
+[ext_resource type="Script" path="res://main/display_time.gd" id="8_ptatx"]
+[ext_resource type="AudioStream" uid="uid://d184xln1mleom" path="res://main/audio/streets_of_scholars.wav" id="12_2pwcm"]
+[ext_resource type="Script" path="res://main/esc_handler.gd" id="13_hwrso"]
+[ext_resource type="Script" path="res://main/countdown_sound_player.gd" id="14_5l3r1"]
+[ext_resource type="AudioStream" uid="uid://iatvh2oph2y0" path="res://main/audio/wood_hit_3.wav" id="14_ylywf"]
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_pwk4a")
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 2
+autostart = true
+script = ExtResource("2_urn7t")
+
+[node name="FloorTileMap" parent="." instance=ExtResource("1_bgaf8")]
+
+[node name="Corral" parent="." instance=ExtResource("3_k1nb5")]
+y_sort_enabled = true
+sheep_to_win = 12
+
+[node name="Sheep Spawner" type="Node" parent="." node_paths=PackedStringArray("shepherd")]
+script = ExtResource("5_06kpe")
+sheep_count = 12
+shepherd = NodePath("../Shepherd")
+
+[node name="Shepherd" parent="." instance=ExtResource("4_mf255")]
+
+[node name="Win" type="Control" parent="."]
+visible = false
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("5_7qn0t")
+script = ExtResource("5_17i2n")
+
+[node name="Label" type="Label" parent="Win"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 329.0
+offset_bottom = 180.0
+text = "Done!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUD" type="Control" parent="."]
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("5_7qn0t")
+
+[node name="Countdown" type="Label" parent="HUD"]
+process_mode = 2
+layout_mode = 0
+offset_left = 1.0
+offset_right = 330.0
+offset_bottom = 180.0
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_kq1cb")
+
+[node name="Sheep Coralled" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HUD/Sheep Coralled"]
+layout_mode = 0
+offset_right = 125.0
+offset_bottom = 26.0
+text = "Sheep corralled:"
+
+[node name="Count" type="Label" parent="HUD/Sheep Coralled"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 168.0
+offset_bottom = 23.0
+script = ExtResource("7_bxodf")
+
+[node name="Time" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 249.0
+offset_right = 289.0
+offset_bottom = 40.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="HUD/Time"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Time:"
+
+[node name="Display" type="Label" parent="HUD/Time"]
+layout_mode = 0
+offset_left = 40.0
+offset_right = 80.0
+offset_bottom = 23.0
+script = ExtResource("8_ptatx")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_2pwcm")
+autoplay = true
+
+[node name="Esc Handler" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("13_hwrso")
+main_menu = "res://menus/main_menu/main_menu.tscn"
+
+[node name="CountdownSoundPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 2
+stream = ExtResource("14_ylywf")
+script = ExtResource("14_5l3r1")
+
+[connection signal="kickoff" from="Timer" to="HUD/Countdown" method="_on_timer_kickoff"]
+[connection signal="kickoff" from="Timer" to="HUD/Time/Display" method="_on_timer_kickoff"]
+[connection signal="kickoff" from="Timer" to="CountdownSoundPlayer" method="_on_timer_kickoff"]
+[connection signal="tick" from="Timer" to="HUD/Countdown" method="_on_timer_tick"]
+[connection signal="tick" from="Timer" to="CountdownSoundPlayer" method="_on_timer_tick"]
+[connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
+[connection signal="corralled" from="Corral" to="HUD/Sheep Coralled/Count" method="_on_corralled"]
+[connection signal="won" from="Corral" to="Win" method="_on_win"]
+[connection signal="won" from="Corral" to="HUD/Time/Display" method="_on_win"]

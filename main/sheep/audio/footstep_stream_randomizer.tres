@@ -1,0 +1,47 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=15 format=3 uid="uid://du8nbfot4sb00"]
+
+[ext_resource type="AudioStream" uid="uid://bwvdd23wuolp0" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_1.wav" id="1_pw443"]
+[ext_resource type="AudioStream" uid="uid://bh7oi1u18mp6w" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_2.wav" id="2_o8hos"]
+[ext_resource type="AudioStream" uid="uid://kfm34p1gtu8f" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_11.wav" id="3_tcsmo"]
+[ext_resource type="AudioStream" uid="uid://dnfxoxx8ou7al" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_12.wav" id="4_ns6lk"]
+[ext_resource type="AudioStream" uid="uid://cxacw71x65d3j" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_13.wav" id="5_kowuo"]
+[ext_resource type="AudioStream" uid="uid://4e2yyswyjs86" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_14.wav" id="6_bwqpj"]
+[ext_resource type="AudioStream" uid="uid://dj5i6x8nx5u3s" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_3.wav" id="7_pgy5p"]
+[ext_resource type="AudioStream" uid="uid://dk6ylkl7yu073" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_4.wav" id="8_f3od1"]
+[ext_resource type="AudioStream" uid="uid://baoewmc3yrfs8" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_5.wav" id="9_m81ly"]
+[ext_resource type="AudioStream" uid="uid://b80o07oglg0qt" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_6.wav" id="10_paye2"]
+[ext_resource type="AudioStream" uid="uid://bwq811re27ovh" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_7.wav" id="11_ejyko"]
+[ext_resource type="AudioStream" uid="uid://cpcx1yyef8ef1" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_8.wav" id="12_s2dp2"]
+[ext_resource type="AudioStream" uid="uid://bfssumahqblpl" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_9.wav" id="13_2817p"]
+[ext_resource type="AudioStream" uid="uid://brh5goij6m4wm" path="res://main/sheep/audio/footsteps/footstep_grass_light_step_10.wav" id="14_v4a41"]
+
+[resource]
+streams_count = 14
+stream_0/stream = ExtResource("1_pw443")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_o8hos")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("7_pgy5p")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("8_f3od1")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("9_m81ly")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("10_paye2")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("11_ejyko")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("12_s2dp2")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("13_2817p")
+stream_8/weight = 1.0
+stream_9/stream = ExtResource("14_v4a41")
+stream_9/weight = 1.0
+stream_10/stream = ExtResource("3_tcsmo")
+stream_10/weight = 1.0
+stream_11/stream = ExtResource("4_ns6lk")
+stream_11/weight = 1.0
+stream_12/stream = ExtResource("5_kowuo")
+stream_12/weight = 1.0
+stream_13/stream = ExtResource("6_bwqpj")
+stream_13/weight = 1.0

@@ -1,0 +1,98 @@
+[gd_scene load_steps=13 format=3 uid="uid://bw2wc8438l8tw"]
+
+[ext_resource type="Script" path="res://main/shepherd/shepherd.gd" id="1_0m0kh"]
+[ext_resource type="Texture2D" uid="uid://bgvfhyq7myiq5" path="res://main/shepherd/sprites/shepherd_atlas.png" id="2_i128y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ks11o"]
+radius = 34.0147
+
+[sub_resource type="Animation" id="Animation_w4pts"]
+resource_name = "Herding"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransparentIcons:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.14159, -1.91986]
+}
+
+[sub_resource type="Animation" id="Animation_bjk2l"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransparentIcons:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.14159]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i0re8"]
+_data = {
+"Herding": SubResource("Animation_w4pts"),
+"Idle": SubResource("Animation_bjk2l")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e62ss"]
+animation = &"Herding"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c44og"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cc2je"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8et1l"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n43hk"]
+xfade_time = 1.0
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_evkfo"]
+states/Herding/node = SubResource("AnimationNodeAnimation_e62ss")
+states/Herding/position = Vector2(477, 100)
+states/Idle/node = SubResource("AnimationNodeAnimation_c44og")
+states/Idle/position = Vector2(342, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_cc2je"), "Idle", "Herding", SubResource("AnimationNodeStateMachineTransition_8et1l"), "Herding", "Idle", SubResource("AnimationNodeStateMachineTransition_n43hk")]
+graph_offset = Vector2(-16, 22)
+
+[node name="Shepherd" type="Area2D"]
+script = ExtResource("1_0m0kh")
+
+[node name="TransparentIcons" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = -3.14159
+scale = Vector2(0.5, -0.5)
+texture = ExtResource("2_i128y")
+hframes = 16
+vframes = 27
+frame = 103
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ks11o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_i0re8")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_evkfo")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
+
+[connection signal="body_entered" from="." to="." method="_on_herding"]
+[connection signal="body_exited" from="." to="." method="_on_not_herding"]

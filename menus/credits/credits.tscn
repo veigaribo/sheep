@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq4omanqn3ps"]
+
+[ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="1_3lmei"]
+[ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="2_mitwo"]
+[ext_resource type="Texture2D" uid="uid://15apcdbchklb" path="res://icon.svg" id="3_j0bom"]
+[ext_resource type="Script" path="res://menus/credits/back_button.gd" id="4_fg5sg"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3lmei")
+
+[node name="Christian" type="Sprite2D" parent="."]
+modulate = Color(0.396078, 0.396078, 0.396078, 1)
+position = Vector2(165, 90.25)
+scale = Vector2(0.171875, 0.149583)
+texture = ExtResource("2_mitwo")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 330.0
+offset_bottom = 179.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="Sprites" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sprites"
+
+[node name="Butter Milk" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "  Butter Milk
+  (Tiny Wonder Farm Asset Pack)"
+
+[node name="cheekyinkling" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "  cheekyinkling
+  (Shikashi's Fantasy Icons Pack)"
+
+[node name="Music" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Music"
+
+[node name="Nicole Lyria" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "  Nicole Lyria
+  (Medieval Themes)"
+
+[node name="SFX" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sound effects"
+
+[node name="FilmCow" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "  FilmCow
+  (FilmCow Royalty Free
+  Sound Effects Library)"
+
+[node name="Background" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "This background image"
+
+[node name="wallpapers_com" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "  https://wallpapers.com/christian"
+
+[node name="Font" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "This font"
+
+[node name="Terry Davis Gaven Rendell" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "  Terry A. Davis, Gaven Rendell"
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(292, 28)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_j0bom")
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 163.0
+offset_right = 329.0
+offset_bottom = 179.0
+text = "Go back"
+script = ExtResource("4_fg5sg")
+main_scene = "res://menus/main_menu/main_menu.tscn"
+
+[connection signal="pressed" from="Back" to="Back" method="_on_pressed"]
