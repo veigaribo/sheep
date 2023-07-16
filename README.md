@@ -2,7 +2,7 @@
 
 A game inspired by Terry Davis' masterpiece RawHide: the funniest of the fun games.
 
-https://raw.githubusercontent.com/veigaribo/sheep/demo/sheep_demo.mp4
+https://github.com/veigaribo/sheep/assets/20007613/49c76764-fde3-4ae2-acb4-7a62abef4723
 
 Use your mouse to guide the sheep to the corral. The time is being tracked.
 
@@ -24,3 +24,5 @@ The font used throughout the game is the one from TempleOS, designed by Terry Da
 The image used as a background in the menus is [this one](https://wallpapers.com/wallpapers/christian-cross-against-sunset-402q1qodf9r8y8zj.html) from wekciodv.
 
 Finally, this wouldn't be possible if it weren't for the [Godot game engine](https://godotengine.org/).
+
+❤
