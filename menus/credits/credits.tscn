@@ -67,7 +67,9 @@ text = "This background image"
 
 [node name="wallpapers_com" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "  https://wallpapers.com/christian"
+text = "  wekciodv  
+  (Christian Cross Against Sunset
+  Wallpaper)"
 
 [node name="Font" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
