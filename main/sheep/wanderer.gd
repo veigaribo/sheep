@@ -14,11 +14,11 @@ signal wander(target_position)
 @onready var _timer := $Timer as Timer
 
 
-func start() -> void:
+func start_timer() -> void:
 	_start_timer()
 
 
-func stop() -> void:
+func stop_timer() -> void:
 	_timer.stop()
 
 

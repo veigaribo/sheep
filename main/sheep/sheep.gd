@@ -21,8 +21,9 @@ var _state := State.IDLE
 @onready var _animation_tree := $AnimationTree as AnimationTree
 @onready var _animation_state := _animation_tree.get("parameters/playback") as AnimationNodeStateMachinePlayback
 
+
 func _ready() -> void:
-	_wanderer.start()
+	_wanderer.start_timer()
 	shepherd.body_entered.connect(_on_herded)
 	shepherd.body_exited.connect(_on_unherded)
 
@@ -38,15 +39,15 @@ func _to_state(new_state: State) -> void:
 	match new_state:
 		State.IDLE:
 			if _state != State.WANDER:
-				_wanderer.start()
+				_wanderer.start_timer()
 				
 			_animation_state.travel("Idle")
 		State.WANDER:
 			_animation_state.travel("Translating")
-			_wanderer.start()
+			_wanderer.start_timer()
 		State.HERD:
 			_animation_state.travel("Translating")
-			_wanderer.stop()
+			_wanderer.stop_timer()
 	
 	_state = new_state
 
