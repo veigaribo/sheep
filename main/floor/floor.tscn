@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://7n6tlswyxt83"]
+[gd_scene load_steps=10 format=3 uid="uid://7n6tlswyxt83"]
 
 [ext_resource type="Texture2D" uid="uid://b27g2xhgt6gvm" path="res://main/floor/sprites/ground_atlas.png" id="1_4lndw"]
 [ext_resource type="Texture2D" uid="uid://yih8a5guukdw" path="res://main/floor/sprites/bridge_atlas.png" id="2_brdtu"]
@@ -665,11 +665,17 @@ terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_vrxlt")
 sources/3 = SubResource("TileSetAtlasSource_cni08")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_288iu"]
-size = Vector2(79, 194)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2no5c"]
+normal = Vector2(0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n45da"]
-size = Vector2(479.922, 76)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dljg1"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hasa0"]
+distance = -138.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rue7v"]
+normal = Vector2(-1, 0)
 
 [node name="Floor" type="Node2D"]
 
@@ -699,17 +705,17 @@ polygon = PackedVector2Array(188, 54, 188, 68, 277, 68, 276, 52, 291, 52, 291, 3
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-37, 87)
-shape = SubResource("RectangleShape2D_288iu")
+position = Vector2(2, 6)
+shape = SubResource("WorldBoundaryShape2D_2no5c")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(358, 87)
-shape = SubResource("RectangleShape2D_288iu")
+position = Vector2(2, 6)
+shape = SubResource("WorldBoundaryShape2D_dljg1")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(160.039, 216)
-shape = SubResource("RectangleShape2D_n45da")
+position = Vector2(318, 41)
+shape = SubResource("WorldBoundaryShape2D_hasa0")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(160, -32)
-shape = SubResource("RectangleShape2D_n45da")
+position = Vector2(318, 179)
+shape = SubResource("WorldBoundaryShape2D_rue7v")
