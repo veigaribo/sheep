@@ -669,7 +669,7 @@ sources/3 = SubResource("TileSetAtlasSource_cni08")
 size = Vector2(79, 194)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n45da"]
-size = Vector2(487.844, 76)
+size = Vector2(479.922, 76)
 
 [node name="Floor" type="Node2D"]
 
@@ -699,17 +699,17 @@ polygon = PackedVector2Array(188, 54, 188, 68, 277, 68, 276, 52, 291, 52, 291, 3
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-40, 87)
+position = Vector2(-37, 87)
 shape = SubResource("RectangleShape2D_288iu")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(369, 88)
+position = Vector2(358, 87)
 shape = SubResource("RectangleShape2D_288iu")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(164, 218)
+position = Vector2(160.039, 216)
 shape = SubResource("RectangleShape2D_n45da")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(164, -32)
+position = Vector2(160, -32)
 shape = SubResource("RectangleShape2D_n45da")

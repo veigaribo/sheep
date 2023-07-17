@@ -17,13 +17,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Christian" type="Sprite2D" parent="."]
-position = Vector2(165, 90.25)
-scale = Vector2(0.171875, 0.149583)
+position = Vector2(160, 90.25)
+scale = Vector2(0.166667, 0.149583)
 texture = ExtResource("1_0lbbv")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_right = 329.0
+offset_right = 320.0
 offset_bottom = 180.0
 theme = ExtResource("2_qvgpj")
 

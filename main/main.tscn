@@ -25,7 +25,7 @@ process_mode = 2
 autostart = true
 script = ExtResource("2_urn7t")
 
-[node name="FloorTileMap" parent="." instance=ExtResource("1_bgaf8")]
+[node name="Floor" parent="." instance=ExtResource("1_bgaf8")]
 
 [node name="Corral" parent="." instance=ExtResource("3_k1nb5")]
 y_sort_enabled = true
@@ -96,8 +96,8 @@ script = ExtResource("7_bxodf")
 
 [node name="Time" type="Control" parent="HUD"]
 anchors_preset = 0
-offset_left = 249.0
-offset_right = 289.0
+offset_left = 240.0
+offset_right = 280.0
 offset_bottom = 40.0
 metadata/_edit_group_ = true
 
