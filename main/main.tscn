@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://7n6tlswyxt83" path="res://main/floor/floor.tscn" id="1_bgaf8"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
 [ext_resource type="Script" path="res://main/countdown_timer.gd" id="2_urn7t"]
-[ext_resource type="PackedScene" uid="uid://cpxhxf33rf7ws" path="res://corral/corral.tscn" id="3_k1nb5"]
+[ext_resource type="PackedScene" uid="uid://cpxhxf33rf7ws" path="res://main/corral/corral.tscn" id="3_k1nb5"]
 [ext_resource type="PackedScene" uid="uid://bw2wc8438l8tw" path="res://main/shepherd/shepherd.tscn" id="4_mf255"]
 [ext_resource type="Script" path="res://main/sheep_spawner.gd" id="5_06kpe"]
 [ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="5_7qn0t"]

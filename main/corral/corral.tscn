@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cpxhxf33rf7ws"]
 
-[ext_resource type="Script" path="res://corral/corral.gd" id="1_a2n5r"]
-[ext_resource type="Texture2D" uid="uid://ugo4era6h5ua" path="res://corral/sprites/corral_atlas.png" id="2_pf61g"]
+[ext_resource type="Script" path="res://main/corral/corral.gd" id="1_a2n5r"]
+[ext_resource type="Texture2D" uid="uid://ugo4era6h5ua" path="res://main/corral/sprites/corral_atlas.png" id="2_pf61g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2xbmf"]
 

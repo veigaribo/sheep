@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ugo4era6h5ua"
-path="res://.godot/imported/corral_atlas.png-f3b701be5a356f39ba17894b4cff87fe.ctex"
+path="res://.godot/imported/corral_atlas.png-2ad2bb5598bcf50a3faee2ba0acdab9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://corral/sprites/corral_atlas.png"
-dest_files=["res://.godot/imported/corral_atlas.png-f3b701be5a356f39ba17894b4cff87fe.ctex"]
+source_file="res://main/corral/sprites/corral_atlas.png"
+dest_files=["res://.godot/imported/corral_atlas.png-2ad2bb5598bcf50a3faee2ba0acdab9a.ctex"]
 
 [params]
 
