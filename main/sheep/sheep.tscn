@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dclnonqik6op5"]
+[gd_scene load_steps=23 format=3 uid="uid://dclnonqik6op5"]
 
 [ext_resource type="Script" path="res://main/sheep/sheep.gd" id="1_cjcdu"]
 [ext_resource type="Texture2D" uid="uid://bhwig0qdxsris" path="res://main/sheep/sprites/sheep_atlas.png" id="2_7lqoa"]
+[ext_resource type="Texture2D" uid="uid://c4ihnc3ab6k37" path="res://main/sheep/sprites/small_shadow.png" id="2_fu4x2"]
 [ext_resource type="AudioStream" uid="uid://du8nbfot4sb00" path="res://main/sheep/audio/footstep_stream_randomizer.tres" id="3_e64oc"]
 [ext_resource type="PackedScene" uid="uid://wa8v7bt0wqpw" path="res://main/sheep/wanderer.tscn" id="4_3pa6s"]
 
@@ -25,6 +26,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shadow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 10)]
+}
 
 [sub_resource type="Animation" id="Animation_y6buc"]
 resource_name = "IdleRight"
@@ -42,9 +55,33 @@ tracks/0/keys = {
 "update": 1,
 "values": [2, 3]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shadow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 10)]
+}
 
 [sub_resource type="Animation" id="Animation_sqrp2"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shadow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 10)]
+}
 
 [sub_resource type="Animation" id="Animation_3e85q"]
 resource_name = "TranslatingLeft"
@@ -81,6 +118,18 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.3, 0.7)
 }
 tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shadow:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 10)]
+}
 
 [sub_resource type="Animation" id="Animation_c51au"]
 resource_name = "TranslatingRight"
@@ -117,6 +166,18 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.3, 0.7)
 }
 tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shadow:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 10)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kk33h"]
 _data = {
@@ -137,7 +198,7 @@ animation = &"IdleRight"
 blend_point_0/node = SubResource("AnimationNodeAnimation_c8nf6")
 blend_point_0/pos = -0.1
 blend_point_1/node = SubResource("AnimationNodeAnimation_obnax")
-blend_point_1/pos = 0.1
+blend_point_1/pos = 0.2
 blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v8ahk"]
@@ -175,12 +236,17 @@ script = ExtResource("1_cjcdu")
 speed = 25.0
 acceleration = 100.0
 
+[node name="Shadow" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, 10)
+texture = ExtResource("2_fu4x2")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_7lqoa")
 hframes = 8
 vframes = 3
-frame = 3
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 7)
@@ -197,7 +263,7 @@ tree_root = SubResource("AnimationNodeStateMachine_x3deb")
 anim_player = NodePath("../AnimationPlayer")
 advance_expression_base_node = NodePath("..")
 active = true
-parameters/Idle/blend_position = 0.202194
+parameters/Idle/blend_position = -0.000865817
 parameters/Translating/blend_position = 0
 
 [node name="Wanderer" parent="." node_paths=PackedStringArray("target") instance=ExtResource("4_3pa6s")]

@@ -26,6 +26,7 @@ autostart = true
 script = ExtResource("2_urn7t")
 
 [node name="Floor" parent="." instance=ExtResource("1_bgaf8")]
+y_sort_enabled = true
 
 [node name="Corral" parent="." instance=ExtResource("3_k1nb5")]
 y_sort_enabled = true
