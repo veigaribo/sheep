@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0von5qosiwce"]
+[gd_scene load_steps=17 format=3 uid="uid://d0von5qosiwce"]
 
 [ext_resource type="PackedScene" uid="uid://7n6tlswyxt83" path="res://main/floor/floor.tscn" id="1_bgaf8"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://main/sheep_spawner.gd" id="5_06kpe"]
 [ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="5_7qn0t"]
 [ext_resource type="Script" path="res://main/win_label.gd" id="5_17i2n"]
+[ext_resource type="PackedScene" uid="uid://bnir45xvjqya1" path="res://point_sampler/point_sampler.tscn" id="6_fcg3p"]
 [ext_resource type="Script" path="res://main/count_corralled.gd" id="7_bxodf"]
 [ext_resource type="Script" path="res://main/countdown_label.gd" id="8_kq1cb"]
 [ext_resource type="Script" path="res://main/display_time.gd" id="8_ptatx"]
@@ -36,6 +37,16 @@ sheep_to_win = 12
 script = ExtResource("5_06kpe")
 sheep_count = 12
 shepherd = NodePath("../Shepherd")
+
+[node name="PointSampler" parent="Sheep Spawner" instance=ExtResource("6_fcg3p")]
+polygons_vertices = [PackedVector2Array(8, 16, 87, 16, 87, 54, 8, 54), PackedVector2Array(4, 64, 188, 64, 4, 152), PackedVector2Array(97, 4, 270, 4, 187, 63, 97, 63), PackedVector2Array(109, 102, 177, 71, 252, 68, 190, 102), PackedVector2Array(77, 162, 320, 29, 320, 164), PackedVector2Array(4, 162, 319, 162, 319, 190, 4, 190)]
+biases = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+test = false
+
+[node name="PositionHelper" type="Node2D" parent="Sheep Spawner/PointSampler"]
+process_mode = 4
+editor_description = "If you want to configure the sampler, move this to check the coordinates."
+position = Vector2(3, 190)
 
 [node name="Shepherd" parent="." instance=ExtResource("4_mf255")]
 

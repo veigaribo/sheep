@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnir45xvjqya1"]
+
+[ext_resource type="Script" path="res://point_sampler/point_sampler.gd" id="1_hr4xt"]
+
+[node name="PointSampler" type="Node2D"]
+script = ExtResource("1_hr4xt")
+test = null

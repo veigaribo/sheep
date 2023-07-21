@@ -1098,7 +1098,6 @@ layer_4/z_index = 0
 layer_4/tile_data = PackedInt32Array(262144, 131076, 4, 458753, 196612, 4, 655361, 131076, 4, 327682, 131076, 4, 262147, 196612, 4, 6, 131076, 4, 196614, 196612, 5, 655367, 196612, 4, 131080, 196612, 4, 524297, 131076, 4, 65546, 131076, 5, 196618, 196612, 5, 655370, 196612, 5, 655371, 131076, 5, 14, 131076, 4, 524302, 196612, 4, 655375, 131076, 4, 524304, 196612, 4, 589840, 131076, 4, 262162, 131076, 5, 393234, 131076, 4, 196627, 131076, 4, 589843, 131076, 5, 720913, 131076, 4, 720901, 196612, 4, 393221, 131076, 4)
 
 [node name="River" type="Node2D" parent="."]
-visible = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="River"]
 
@@ -1119,11 +1118,11 @@ position = Vector2(2, 6)
 shape = SubResource("WorldBoundaryShape2D_dljg1")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundary"]
-position = Vector2(318, 41)
+position = Vector2(318, 52)
 shape = SubResource("WorldBoundaryShape2D_hasa0")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundary"]
-position = Vector2(318, 179)
+position = Vector2(318, 190)
 shape = SubResource("WorldBoundaryShape2D_rue7v")
 
 [node name="AnimatedDecorations" type="Node2D" parent="."]
@@ -1163,4 +1162,4 @@ frame_progress = 0.715059
 texture_filter = 1
 position = Vector2(216, 56)
 sprite_frames = ExtResource("6_6acxe")
-frame_progress = 0.943156
+frame_progress = 0.657318
