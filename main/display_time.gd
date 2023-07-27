@@ -10,7 +10,8 @@ func _ready() -> void:
 	set_text("00:00.000")
 
 
-func _process(_delta: float) -> void:
+# Only count significant frames
+func _physics_process(_delta: float) -> void:
 	if _running:
 		set_text(_format())
 
