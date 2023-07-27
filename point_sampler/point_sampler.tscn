@@ -4,4 +4,3 @@
 
 [node name="PointSampler" type="Node2D"]
 script = ExtResource("1_hr4xt")
-test = null

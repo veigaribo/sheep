@@ -22,9 +22,9 @@ func _ready():
 
 func _setup_sampler():
 	var corral_polygon = 0
-	var left_side_polygons = [1, 2]
+	var left_side_polygons = [1, 2, 6, 7]
 	var right_side_polygons = [4, 5]
-	var polygon_count = 6
+	var polygon_count = 8
 	
 	_sheep_constrainer = SheepSpawnerConstrainer.new(
 		polygon_count,

@@ -39,14 +39,13 @@ sheep_count = 12
 shepherd = NodePath("../Shepherd")
 
 [node name="PointSampler" parent="Sheep Spawner" instance=ExtResource("6_fcg3p")]
-polygons_vertices = [PackedVector2Array(8, 16, 87, 16, 87, 54, 8, 54), PackedVector2Array(4, 64, 188, 64, 4, 152), PackedVector2Array(97, 4, 270, 4, 187, 63, 97, 63), PackedVector2Array(109, 102, 177, 71, 252, 68, 190, 102), PackedVector2Array(77, 162, 320, 29, 320, 164), PackedVector2Array(4, 162, 319, 162, 319, 190, 4, 190)]
-biases = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-test = false
+polygons_vertices = [PackedVector2Array(8, 16, 87, 16, 87, 54, 8, 54), PackedVector2Array(4, 64, 188, 64, 4, 152), PackedVector2Array(97, 4, 290, 4, 187, 63, 97, 63), PackedVector2Array(109, 102, 174, 71, 249, 68, 187, 102), PackedVector2Array(77, 162, 320, 29, 320, 162), PackedVector2Array(4, 162, 319, 162, 319, 190, 4, 190), PackedVector2Array(56, 55, 72, 55, 72, 64, 56, 64), PackedVector2Array(74, 119, 109, 102, 109, 119)]
+biases = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 [node name="PositionHelper" type="Node2D" parent="Sheep Spawner/PointSampler"]
 process_mode = 4
 editor_description = "If you want to configure the sampler, move this to check the coordinates."
-position = Vector2(3, 190)
+position = Vector2(109, 102)
 
 [node name="Shepherd" parent="." instance=ExtResource("4_mf255")]
 
