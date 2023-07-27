@@ -2,7 +2,7 @@
 
 A game inspired by Terry Davis' masterpiece RawHide: the funniest of the fun games.
 
-https://github.com/veigaribo/sheep/assets/20007613/49c76764-fde3-4ae2-acb4-7a62abef4723
+https://github.com/veigaribo/sheep/assets/20007613/a26b5828-a0bd-4cb1-865d-6b3562a61109
 
 Use your mouse to guide the sheep to the corral. The time is being tracked.
 
