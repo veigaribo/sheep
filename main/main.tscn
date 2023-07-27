@@ -108,8 +108,8 @@ script = ExtResource("7_bxodf")
 
 [node name="Time" type="Control" parent="HUD"]
 anchors_preset = 0
-offset_left = 240.0
-offset_right = 280.0
+offset_left = 208.0
+offset_right = 248.0
 offset_bottom = 40.0
 metadata/_edit_group_ = true
 
@@ -124,6 +124,7 @@ layout_mode = 0
 offset_left = 40.0
 offset_right = 80.0
 offset_bottom = 23.0
+text = "00:00.000"
 script = ExtResource("8_ptatx")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]

@@ -7,7 +7,7 @@ var _start: int
 
 
 func _ready() -> void:
-	set_text("00:00")
+	set_text("00:00.000")
 
 
 func _process(_delta: float) -> void:
@@ -21,10 +21,11 @@ func _format() -> String:
 	
 	var elapsed_seconds := elapsed / 1000
 	
-	var minutes = elapsed_seconds / 60
-	var seconds = elapsed_seconds % 60
+	var minutes := elapsed_seconds / 60
+	var seconds := elapsed_seconds % 60
+	var msec := elapsed % 1000
 	
-	return "%02d:%02d" % [minutes, seconds]
+	return "%02d:%02d.%03d" % [minutes, seconds, msec]
 
 
 func _on_win() -> void:
