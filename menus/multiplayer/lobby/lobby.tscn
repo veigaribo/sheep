@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://brgccxw0jm4dm"]
+
+[ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_27ufc"]
+[ext_resource type="Script" path="res://menus/multiplayer/lobby/lobby.gd" id="1_cs560"]
+[ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_r1ybc"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cs560")
+previous_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
+main_scene_path = "res://main/main.tscn"
+player_name_scene_path = "res://menus/multiplayer/lobby/player_name.tscn"
+
+[node name="PlayerLabelMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://menus/multiplayer/lobby/player_name.tscn")
+spawn_path = NodePath("../CenterContainer/VBoxContainer/PlayerNames")
+
+[node name="Christian" type="Sprite2D" parent="."]
+modulate = Color(0.396078, 0.396078, 0.396078, 1)
+position = Vector2(160, 96)
+scale = Vector2(0.166667, 0.16)
+texture = ExtResource("1_27ufc")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 191.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="PlayerNames" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cockpit" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Ok" type="Button" parent="CenterContainer/VBoxContainer/Cockpit"]
+layout_mode = 2
+text = "Ok"
+
+[node name="ReturnButton" parent="CenterContainer/VBoxContainer/Cockpit" instance=ExtResource("2_r1ybc")]
+layout_mode = 2
+text = "Return"
+script = null
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Cockpit/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Cockpit/ReturnButton" to="." method="_on_return_button_pressed"]

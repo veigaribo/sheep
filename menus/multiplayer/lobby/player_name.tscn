@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvae1nuyragpc"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg453"]
+properties/0/path = NodePath(".:text")
+properties/0/spawn = true
+properties/0/sync = false
+properties/0/watch = true
+
+[node name="PlayerName" type="Label"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jg453")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dclnonqik6op5"]
+[gd_scene load_steps=24 format=3 uid="uid://dclnonqik6op5"]
 
 [ext_resource type="Script" path="res://main/sheep/sheep.gd" id="1_cjcdu"]
 [ext_resource type="Texture2D" uid="uid://bhwig0qdxsris" path="res://main/sheep/sprites/sheep_atlas.png" id="2_7lqoa"]
@@ -230,6 +230,12 @@ states/Translating/position = Vector2(434, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ix8ic"), "Idle", "Translating", SubResource("AnimationNodeStateMachineTransition_vmlop"), "Translating", "Idle", SubResource("AnimationNodeStateMachineTransition_afjq2")]
 graph_offset = Vector2(-145, -1)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7vur3"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
 [node name="Sheep" type="CharacterBody2D" groups=["Sheep"]]
 motion_mode = 1
 script = ExtResource("1_cjcdu")
@@ -246,7 +252,7 @@ texture_filter = 1
 texture = ExtResource("2_7lqoa")
 hframes = 8
 vframes = 3
-frame = 3
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 7)
@@ -273,5 +279,8 @@ max_wander_time_s = 6
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_e64oc")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_7vur3")
 
 [connection signal="wander" from="Wanderer" to="." method="_on_wander"]

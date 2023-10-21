@@ -11,10 +11,9 @@ enum State {
 @export var speed := 300.0
 @export var acceleration := 200.0
 
-var shepherd: Shepherd
-var wander_indicator: Node2D
-
 var _state := State.IDLE
+
+var herding_shepherds: Array
 
 @onready var _wanderer := $Wanderer as Wanderer
 @onready var _wandering_to := global_position
@@ -23,12 +22,16 @@ var _state := State.IDLE
 
 
 func _ready() -> void:
+	if not multiplayer.is_server():
+		return
+	
 	_wanderer.start_timer()
-	shepherd.body_entered.connect(_on_herded)
-	shepherd.body_exited.connect(_on_unherded)
 
 
 func _physics_process(delta: float) -> void:
+	if not multiplayer.is_server():
+		return
+	
 	match _state:
 		State.IDLE: _physics_idle(delta)
 		State.WANDER: _physics_wander(delta)
@@ -41,12 +44,12 @@ func _to_state(new_state: State) -> void:
 			if _state != State.WANDER:
 				_wanderer.start_timer()
 				
-			_animation_state.travel("Idle")
+			rpc("animation_set_state", "Idle")
 		State.WANDER:
-			_animation_state.travel("Translating")
+			rpc("animation_set_state", "Translating")
 			_wanderer.start_timer()
 		State.HERD:
-			_animation_state.travel("Translating")
+			rpc("animation_set_state", "Translating")
 			_wanderer.stop_timer()
 	
 	_state = new_state
@@ -68,11 +71,61 @@ func _physics_wander(delta: float) -> void:
 
 
 func _physics_herd(delta: float) -> void:
-	var shepherd_pos := shepherd.get_global_position()
-	var diff_pos := global_position - shepherd_pos
-	var direction := diff_pos.normalized()
+	var shepherd_position_sum := Vector2.ZERO
+	
+	for _shepherd in herding_shepherds:
+		var shepherd := _shepherd as Shepherd
+		
+		var shepherd_pos := shepherd.get_global_position()
+		shepherd_position_sum += shepherd_pos
+	
+	var average_shepherd_position := shepherd_position_sum / herding_shepherds.size()
+	
+	var diff_pos := global_position - average_shepherd_position
+	
+	var direction: Vector2
+	if not is_zero_approx(diff_pos.length()):
+		direction = diff_pos.normalized()
+	else:
+		direction = Vector2.ZERO
 	
 	_move_in_direction(direction, delta)
+
+
+func herd(shepherd: Shepherd) -> void:
+	if _state != State.HERD:
+		_to_state(State.HERD)
+	
+	_add_herding_shepherd(shepherd)
+
+
+func _add_herding_shepherd(shepherd: Shepherd) -> void:
+	for current_shepherd in herding_shepherds:
+		if current_shepherd.id == shepherd.id:
+			return
+	
+	herding_shepherds.push_back(shepherd)
+
+
+func unherd(shepherd: Shepherd) -> void:
+	_remove_herding_shepherd(shepherd)
+	
+	if herding_shepherds.is_empty():
+		_stop()
+
+
+func _remove_herding_shepherd(shepherd: Shepherd) -> void:
+	var shepherd_i: int = -1
+	
+	for i in herding_shepherds.size():
+		var current_shepherd := herding_shepherds[i] as Shepherd
+		
+		if current_shepherd.server_player == shepherd.server_player:
+			shepherd_i = i
+			break
+	
+	if shepherd_i != -1:
+		herding_shepherds.remove_at(shepherd_i)
 
 
 func _stop() -> void:
@@ -81,7 +134,7 @@ func _stop() -> void:
 
 
 func _move_in_direction(direction: Vector2, delta: float) -> bool:
-	_set_facing(direction)
+	rpc("animation_set_facing", direction)
 	
 	var target_velocity := direction * speed
 	var delta_acceleration := delta * acceleration
@@ -102,25 +155,18 @@ func _move_to(target_position: Vector2, delta: float) -> bool:
 	return _move_in_direction(direction, delta)
 
 
-func _set_facing(direction: Vector2) -> void:
+@rpc("authority", "call_local", "unreliable")
+func animation_set_facing(direction: Vector2) -> void:
 	_animation_tree.set("parameters/Idle/blend_position", direction.x)
 	_animation_tree.set("parameters/Translating/blend_position", direction.x)
+
+
+@rpc("authority", "call_local", "unreliable")
+func animation_set_state(state: String) -> void:
+	_animation_state.travel(state)
 
 
 func _on_wander(target_position: Vector2) -> void:
 	if _state in [State.IDLE, State.WANDER]:
 		_wandering_to = target_position
 		_to_state(State.WANDER)
-		
-		if wander_indicator:
-			wander_indicator.set_global_position(_wandering_to)
-
-
-func _on_herded(body: Node2D) -> void:
-	if body == self:
-		_to_state(State.HERD)
-
-
-func _on_unherded(body: Node2D) -> void:
-	if body == self:
-		_stop()

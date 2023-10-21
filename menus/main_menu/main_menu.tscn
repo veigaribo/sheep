@@ -1,11 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlh8jm3hdtx4r"]
+[gd_scene load_steps=4 format=3 uid="uid://dlh8jm3hdtx4r"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_0lbbv"]
-[ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="2_qvgpj"]
-[ext_resource type="Script" path="res://menus/main_menu/play_button.gd" id="3_yo0qw"]
-[ext_resource type="PackedScene" uid="uid://d0von5qosiwce" path="res://main/main.tscn" id="4_aab6i"]
-[ext_resource type="Script" path="res://menus/main_menu/credits_button.gd" id="5_ivimn"]
-[ext_resource type="PackedScene" uid="uid://bq4omanqn3ps" path="res://menus/credits/credits.tscn" id="6_wv3ci"]
+[ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_csg7n"]
 [ext_resource type="Script" path="res://menus/main_menu/quit_button.gd" id="7_frk4o"]
 
 [node name="Main Menu" type="Control"]
@@ -25,7 +21,6 @@ texture = ExtResource("1_0lbbv")
 layout_mode = 0
 offset_right = 320.0
 offset_bottom = 192.0
-theme = ExtResource("2_qvgpj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
@@ -39,23 +34,24 @@ horizontal_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Play" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="PlayButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Play"
-script = ExtResource("3_yo0qw")
-play_scene = ExtResource("4_aab6i")
+scene = "res://main/main.tscn"
 
-[node name="Credits" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="MultiplayerButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
+layout_mode = 2
+text = "Multiplayer"
+scene = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
+
+[node name="CreditsButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Credits"
-script = ExtResource("5_ivimn")
-credits_scene = ExtResource("6_wv3ci")
+scene = "res://menus/credits/credits.tscn"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 script = ExtResource("7_frk4o")
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Play" to="CenterContainer/VBoxContainer/VBoxContainer/Play" method="_on_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Credits" to="CenterContainer/VBoxContainer/VBoxContainer/Credits" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="CenterContainer/VBoxContainer/VBoxContainer/Quit" method="_on_pressed"]

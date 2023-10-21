@@ -21,6 +21,8 @@ rng="*res://globals/rng.gd"
 
 [debug]
 
+gdscript/warnings/shadowed_variable=0
+gdscript/warnings/shadowed_variable_base_class=0
 gdscript/warnings/integer_division=0
 
 [display]
@@ -30,6 +32,10 @@ window/size/viewport_height=192
 window/size/window_width_override=1020
 window/size/window_height_override=612
 window/stretch/mode="viewport"
+
+[gui]
+
+theme/custom="res://control/theme.tres"
 
 [rendering]
 

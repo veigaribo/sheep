@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq4omanqn3ps"]
+[gd_scene load_steps=4 format=3 uid="uid://bq4omanqn3ps"]
 
-[ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="1_3lmei"]
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="2_mitwo"]
+[ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="3_1nsa7"]
 [ext_resource type="Texture2D" uid="uid://15apcdbchklb" path="res://icon.svg" id="3_j0bom"]
-[ext_resource type="Script" path="res://menus/credits/back_button.gd" id="4_fg5sg"]
 
 [node name="Credits" type="Control"]
 layout_mode = 3
@@ -12,17 +11,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_3lmei")
 
 [node name="Christian" type="Sprite2D" parent="."]
 modulate = Color(0.396078, 0.396078, 0.396078, 1)
-position = Vector2(159.5, 96.2501)
-scale = Vector2(0.166146, 0.159583)
+position = Vector2(160, 96)
+scale = Vector2(0.166667, 0.16)
 texture = ExtResource("2_mitwo")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_right = 319.0
+offset_right = 320.0
 offset_bottom = 192.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
@@ -84,14 +82,11 @@ position = Vector2(292, 28)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_j0bom")
 
-[node name="Back" type="Button" parent="."]
+[node name="Back" parent="." instance=ExtResource("3_1nsa7")]
 layout_mode = 0
-offset_left = 253.0
-offset_top = 173.0
-offset_right = 317.0
-offset_bottom = 189.0
-text = "Go back"
-script = ExtResource("4_fg5sg")
-main_scene = "res://menus/main_menu/main_menu.tscn"
-
-[connection signal="pressed" from="Back" to="Back" method="_on_pressed"]
+offset_left = 260.0
+offset_top = 172.0
+offset_right = 316.0
+offset_bottom = 188.0
+text = "Return"
+scene = "res://menus/main_menu/main_menu.tscn"

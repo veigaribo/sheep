@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://xvtrv8cttec7"]
+
+[ext_resource type="Script" path="res://menus/go_to_scene.gd" id="1_31651"]
+
+[node name="GoToSceneButton" type="Button"]
+offset_right = 56.0
+offset_bottom = 16.0
+script = ExtResource("1_31651")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

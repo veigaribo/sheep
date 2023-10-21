@@ -24,7 +24,12 @@ func _on_body_entered(body: Node2D) -> void:
 		corralled.emit(_sheep_inside)
 		
 		if _sheep_inside >= sheep_to_win:
-			won.emit()
+			rpc("emit_won")
+
+
+@rpc("authority", "call_local", "reliable")
+func emit_won():
+	won.emit()
 
 
 func _on_body_exited(body: Node2D) -> void:

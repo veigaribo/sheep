@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://beoa2e6h02jrx"]
+
+[ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_rmarm"]
+[ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_frfri"]
+
+[node name="HostOrConnect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Christian" type="Sprite2D" parent="."]
+modulate = Color(0.396078, 0.396078, 0.396078, 1)
+position = Vector2(160, 96)
+scale = Vector2(0.166667, 0.16)
+texture = ExtResource("1_rmarm")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 191.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="HostButton" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_frfri")]
+layout_mode = 2
+text = "Host"
+scene = "res://menus/multiplayer/host_or_connect/host/host.tscn"
+
+[node name="ConnectButton" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_frfri")]
+layout_mode = 2
+text = "Connect"
+scene = "res://menus/multiplayer/host_or_connect/connect/connect.tscn"
+
+[node name="ReturnButton" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_frfri")]
+layout_mode = 2
+text = "Return"
+scene = "res://menus/main_menu/main_menu.tscn"

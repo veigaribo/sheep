@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
 [ext_resource type="Script" path="res://main/countdown_timer.gd" id="2_urn7t"]
 [ext_resource type="PackedScene" uid="uid://cpxhxf33rf7ws" path="res://main/corral/corral.tscn" id="3_k1nb5"]
-[ext_resource type="PackedScene" uid="uid://bw2wc8438l8tw" path="res://main/shepherd/shepherd.tscn" id="4_mf255"]
 [ext_resource type="Script" path="res://main/sheep_spawner.gd" id="5_06kpe"]
 [ext_resource type="Theme" uid="uid://c18kvgr1gnhqv" path="res://control/theme.tres" id="5_7qn0t"]
 [ext_resource type="Script" path="res://main/win_label.gd" id="5_17i2n"]
@@ -17,9 +16,24 @@
 [ext_resource type="Script" path="res://main/countdown_sound_player.gd" id="14_5l3r1"]
 [ext_resource type="AudioStream" uid="uid://iatvh2oph2y0" path="res://main/audio/wood_hit_3.wav" id="14_ylywf"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7kos"]
+properties/0/path = NodePath("HUD/Time/Display:text")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_pwk4a")
+main_menu_path = "res://menus/main_menu/main_menu.tscn"
+shepherd_scene_path = "res://main/shepherd/shepherd.tscn"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://main/shepherd/shepherd.tscn", "res://main/sheep/sheep.tscn")
+spawn_path = NodePath("..")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_o7kos")
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 2
@@ -33,10 +47,9 @@ y_sort_enabled = true
 y_sort_enabled = true
 sheep_to_win = 12
 
-[node name="Sheep Spawner" type="Node" parent="." node_paths=PackedStringArray("shepherd")]
+[node name="Sheep Spawner" type="Node" parent="."]
 script = ExtResource("5_06kpe")
 sheep_count = 12
-shepherd = NodePath("../Shepherd")
 
 [node name="PointSampler" parent="Sheep Spawner" instance=ExtResource("6_fcg3p")]
 polygons_vertices = [PackedVector2Array(8, 16, 87, 16, 87, 54, 8, 54), PackedVector2Array(4, 64, 188, 64, 4, 152), PackedVector2Array(97, 4, 290, 4, 187, 63, 97, 63), PackedVector2Array(109, 102, 174, 71, 249, 68, 187, 102), PackedVector2Array(77, 162, 320, 29, 320, 162), PackedVector2Array(4, 162, 319, 162, 319, 190, 4, 190), PackedVector2Array(56, 55, 72, 55, 72, 64, 56, 64), PackedVector2Array(74, 119, 109, 102, 109, 119)]
@@ -46,8 +59,6 @@ biases = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 process_mode = 4
 editor_description = "If you want to configure the sampler, move this to check the coordinates."
 position = Vector2(109, 102)
-
-[node name="Shepherd" parent="." instance=ExtResource("4_mf255")]
 
 [node name="Win" type="Control" parent="."]
 visible = false

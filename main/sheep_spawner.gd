@@ -2,22 +2,25 @@ class_name SheepSpawner
 extends Node
 
 
+@export var root_node: NodePath
 @export var sheep_count: int = 10
 @export var shepherd: Shepherd
-@export var wander_indicator: Node2D
 
 var _sheep_scene := preload("sheep/sheep.tscn")
 var _sheep_constrainer: SheepSpawnerConstrainer
 
-@onready var _main := $/root/Main as Main
+@onready var _main := $".." as Main
 @onready var _sampler := $PointSampler as PointSampler2D
 
 
 func _ready():
+	if not multiplayer.is_server():
+		return
+	
 	_setup_sampler()
 	
 	for i in range(sheep_count):
-		_spawn_sheep.call_deferred()
+		_spawn_sheep.call_deferred(i)
 
 
 func _setup_sampler():
@@ -36,22 +39,19 @@ func _setup_sampler():
 	_sampler.biases = _sheep_constrainer.biases
 
 
-func _spawn_sheep():
-	var screen_size := get_viewport().get_visible_rect().size
-	
+func _spawn_sheep(id: int):
 	var sheep := _sheep_scene.instantiate() as Sheep
 	var sampler_result := _sampler.random_point()
 	
+	sheep.set_name("Sheep" + str(id))
 	sheep.position = sampler_result.position
-	sheep.shepherd = shepherd
-	sheep.wander_indicator = wander_indicator
 	
-	_main.add_child(sheep)
+	add_sibling(sheep)
 	sheep.move_and_slide()
 	
 	if sheep.is_on_wall():
 		sheep.free()
-		_spawn_sheep()
+		_spawn_sheep(id)
 	else:
 		_sheep_constrainer.update(sampler_result.polygon)
 

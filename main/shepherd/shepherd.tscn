@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw2wc8438l8tw"]
+[gd_scene load_steps=14 format=3 uid="uid://bw2wc8438l8tw"]
 
 [ext_resource type="Script" path="res://main/shepherd/shepherd.gd" id="1_0m0kh"]
 [ext_resource type="Texture2D" uid="uid://bgvfhyq7myiq5" path="res://main/shepherd/sprites/shepherd_atlas.png" id="2_i128y"]
@@ -65,6 +65,12 @@ states/Idle/position = Vector2(342, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_cc2je"), "Idle", "Herding", SubResource("AnimationNodeStateMachineTransition_8et1l"), "Herding", "Idle", SubResource("AnimationNodeStateMachineTransition_n43hk")]
 graph_offset = Vector2(-16, 22)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gkjci"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
 [node name="Shepherd" type="Area2D"]
 script = ExtResource("1_0m0kh")
 
@@ -93,6 +99,9 @@ active = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gkjci")
 
 [connection signal="body_entered" from="." to="." method="_on_herding"]
 [connection signal="body_exited" from="." to="." method="_on_not_herding"]

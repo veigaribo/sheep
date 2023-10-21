@@ -12,6 +12,9 @@ func _ready() -> void:
 
 # Only count significant frames
 func _physics_process(_delta: float) -> void:
+	if not multiplayer.is_server():
+		return
+	
 	if _running:
 		set_text(_format())
 
