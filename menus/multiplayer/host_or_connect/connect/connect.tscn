@@ -50,7 +50,6 @@ text = "Ip address"
 
 [node name="IpAddrEdit" type="LineEdit" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "localhost"
 alignment = 1
 
 [node name="PortLabel" type="Label" parent="CenterContainer/VBoxContainer"]
