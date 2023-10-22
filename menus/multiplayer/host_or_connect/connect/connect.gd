@@ -6,6 +6,9 @@ extends Control
 var player_name: String
 
 @onready var lobby_scene := load(lobby_scene_path)
+
+@onready var message_label = $CenterContainer/VBoxContainer/MessageLabel as Label
+
 @onready var name_edit := $CenterContainer/VBoxContainer/NameEdit as LineEdit
 @onready var ip_addr_edit := $CenterContainer/VBoxContainer/IpAddrEdit as LineEdit
 @onready var port_edit := $CenterContainer/VBoxContainer/PortEdit as LineEdit
@@ -17,6 +20,11 @@ func _ready():
 
 
 func _on_ok_pressed():
+	message_label.set_visible(false)
+	
+	# Close any possible hanging attempted connections
+	multiplayer.get_multiplayer_peer().close()
+	
 	var peer = ENetMultiplayerPeer.new()
 	
 	# All sanitization should go here
@@ -61,5 +69,6 @@ func _on_connected():
 
 
 func _on_not_connected():
-	# TODO
-	print("pau")
+	# Takes a while to happen
+	message_label.set_text("Could not connect.")
+	message_label.set_visible(true)

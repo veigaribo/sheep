@@ -109,4 +109,5 @@ func go_to_main():
 
 func _on_ok_pressed():
 	if multiplayer.is_server():
+		multiplayer.get_multiplayer_peer().set_refuse_new_connections(true)
 		rpc("go_to_main")

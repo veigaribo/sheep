@@ -6,6 +6,9 @@ extends Control
 var player_name: String
 
 @onready var lobby_scene := load(lobby_scene_path)
+
+@onready var message_label = $ScrollContainer/CenterContainer/VBoxContainer/MessageLabel as Label
+
 @onready var name_edit := $ScrollContainer/CenterContainer/VBoxContainer/NameEdit as LineEdit
 @onready var port_edit := $ScrollContainer/CenterContainer/VBoxContainer/PortEdit as LineEdit
 
@@ -14,6 +17,11 @@ var player_name: String
 
 
 func _on_ok_pressed():
+	message_label.set_visible(false)
+	
+	# Paranoia
+	multiplayer.get_multiplayer_peer().close()
+	
 	var peer = ENetMultiplayerPeer.new()
 	
 	# All sanitization should go here
@@ -25,7 +33,13 @@ func _on_ok_pressed():
 	if not ip_address.is_empty():
 		peer.set_bind_ip(ip_address)
 	
-	peer.create_server(port, max_players)
+	var result := peer.create_server(port, max_players)
+	
+	if result == ERR_CANT_CREATE:
+		message_label.set_text("Could not create the server. Please check if port " + str(port) + " is available.")
+		message_label.set_visible(true)
+		return
+	
 	multiplayer.set_multiplayer_peer(peer)
 	
 	_go_to_lobby()
@@ -47,7 +61,8 @@ func _get_ip_addr() -> String:
 
 
 func _get_max_players() -> int:
-	var max_players := int(max_players_edit.get_text())
+	# Subtracting 1 to account for the host which seems more intuitive
+	var max_players := int(max_players_edit.get_text()) - 1
 	return max_players
 
 
