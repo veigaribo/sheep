@@ -23,7 +23,7 @@ func _on_body_entered(body: Node2D) -> void:
 		_sheep_inside += 1
 		corralled.emit(_sheep_inside)
 		
-		if _sheep_inside >= sheep_to_win:
+		if _sheep_inside >= sheep_to_win and multiplayer.is_server():
 			rpc("emit_won")
 
 
