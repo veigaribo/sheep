@@ -47,14 +47,14 @@ func _ready() -> void:
 		shepherd.server_player = Player.new(1, "")
 		add_child(shepherd)
 	
-	_tree.paused = true
-	await _timer.kickoff
-	_tree.paused = false
-	
 	multiplayer.server_disconnected.connect(client_disconnected)
 	
 	if multiplayer.is_server():
 		multiplayer.peer_disconnected.connect(server_disconnected)
+	
+	_tree.paused = true
+	await _timer.kickoff
+	_tree.paused = false
 
 
 func _get_shepherd_scene() -> Resource:
