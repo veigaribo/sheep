@@ -144,7 +144,7 @@ autoplay = true
 [node name="Esc Handler" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("13_hwrso")
-main_menu = "res://menus/main_menu/main_menu.tscn"
+main_menu_path = "res://menus/main_menu/main_menu.tscn"
 
 [node name="CountdownSoundPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 2

@@ -18,16 +18,22 @@ func _process(_delta: float) -> void:
 	var mouse_pos := get_viewport().get_mouse_position()
 	
 	if multiplayer.is_server():
-		server_update_position(1, mouse_pos)
+		if server_player.multiplayer_id == 1:
+			server_set_position(mouse_pos)
 	else:
-		var id = multiplayer.get_unique_id()
-		rpc_id(1, "server_update_position", id, mouse_pos)
+		rpc_id(1, "server_update_position", mouse_pos)
 
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
-func server_update_position(id: int, mouse_pos: Vector2):
-	if server_player.multiplayer_id == id:
-		set_global_position(mouse_pos)
+func server_update_position(mouse_pos: Vector2):
+	var sender_id = multiplayer.get_remote_sender_id()
+	
+	if server_player.multiplayer_id == sender_id:
+		server_set_position(mouse_pos)
+
+
+func server_set_position(pos: Vector2):
+	set_global_position(pos)
 
 
 func _on_herding(body: Node2D) -> void:

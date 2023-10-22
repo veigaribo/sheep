@@ -101,7 +101,7 @@ func herd(shepherd: Shepherd) -> void:
 
 func _add_herding_shepherd(shepherd: Shepherd) -> void:
 	for current_shepherd in herding_shepherds:
-		if current_shepherd.id == shepherd.id:
+		if current_shepherd.server_player == shepherd.server_player:
 			return
 	
 	herding_shepherds.push_back(shepherd)

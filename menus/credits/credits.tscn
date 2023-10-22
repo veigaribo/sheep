@@ -82,11 +82,12 @@ position = Vector2(292, 28)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_j0bom")
 
-[node name="Back" parent="." instance=ExtResource("3_1nsa7")]
+[node name="Back" parent="." node_paths=PackedStringArray("parent_scene") instance=ExtResource("3_1nsa7")]
 layout_mode = 0
 offset_left = 260.0
 offset_top = 172.0
 offset_right = 316.0
 offset_bottom = 188.0
 text = "Return"
-scene = "res://menus/main_menu/main_menu.tscn"
+parent_scene = NodePath("..")
+next_scene_path = "res://menus/main_menu/main_menu.tscn"

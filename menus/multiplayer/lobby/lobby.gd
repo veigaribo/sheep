@@ -42,7 +42,7 @@ func _ready():
 		multiplayer.peer_disconnected.connect(server_unregister_player)
 	else:
 		ok_button.set_visible(false)
-		rpc_id(1, "server_update_name", self_player.multiplayer_id, self_player.name)
+		rpc_id(1, "server_update_name", self_player.name)
 		
 		multiplayer.server_disconnected.connect(client_disconnected)
 
@@ -65,7 +65,8 @@ func server_unregister_player(id: int):
 
 
 @rpc("any_peer", "call_remote", "reliable")
-func server_update_name(id: int, name: String):
+func server_update_name(name: String):
+	var id = multiplayer.get_remote_sender_id()
 	main.server_update_player(Player.new(id, name))
 	
 	var player_name_label = player_names.get_node("PlayerName" + str(id))

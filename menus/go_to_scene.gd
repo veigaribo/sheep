@@ -2,12 +2,19 @@ class_name GoToSceneButton
 extends Button
 
 
-@export_file var scene: String
+@export var parent_scene: Node
+@export_file var next_scene_path: String
 
 
 func set_scene(new_scene: String):
-	scene = new_scene
+	next_scene_path = new_scene
 
 
 func _on_pressed():
-	get_tree().change_scene_to_file(scene)
+	var next_scene := load(next_scene_path)
+	var next := next_scene.instantiate() as Node
+	
+	var root := $/root
+	root.remove_child(parent_scene)
+	root.add_child(next)
+	queue_free()

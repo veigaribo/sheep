@@ -90,10 +90,11 @@ max_length = 4
 layout_mode = 2
 text = "Ok"
 
-[node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_k12pw")]
+[node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("3_k12pw")]
 layout_mode = 2
 text = "Return"
-scene = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
+parent_scene = NodePath("../../../..")
+next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 
 [connection signal="toggled" from="ScrollContainer/CenterContainer/VBoxContainer/AdvancedToggle" to="ScrollContainer/CenterContainer/VBoxContainer/AdvancedToggle" method="_on_toggled"]
 [connection signal="pressed" from="ScrollContainer/CenterContainer/VBoxContainer/Ok" to="." method="_on_ok_pressed"]

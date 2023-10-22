@@ -34,20 +34,23 @@ horizontal_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PlayButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
+[node name="PlayButton" parent="CenterContainer/VBoxContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Play"
-scene = "res://main/main.tscn"
+parent_scene = NodePath("../../../..")
+next_scene_path = "res://main/main.tscn"
 
-[node name="MultiplayerButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
+[node name="MultiplayerButton" parent="CenterContainer/VBoxContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Multiplayer"
-scene = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
+parent_scene = NodePath("../../../..")
+next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 
-[node name="CreditsButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
+[node name="CreditsButton" parent="CenterContainer/VBoxContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Credits"
-scene = "res://menus/credits/credits.tscn"
+parent_scene = NodePath("../../../..")
+next_scene_path = "res://menus/credits/credits.tscn"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
