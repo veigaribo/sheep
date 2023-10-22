@@ -30,6 +30,7 @@ func _ready():
 	push_warning("player ", self_player.multiplayer_id, ": ", self_player.name)
 	
 	if multiplayer.is_server():
+		main.set_multiplayer(true)
 		main.server_add_player(self_player)
 		
 		var player_name_label := player_name_scene.instantiate() as Label

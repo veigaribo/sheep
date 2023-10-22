@@ -33,12 +33,12 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	match _state:
-		State.IDLE: _physics_idle(delta)
-		State.WANDER: _physics_wander(delta)
-		State.HERD: _physics_herd(delta)
+		State.IDLE: _server_physics_idle(delta)
+		State.WANDER: _server_physics_wander(delta)
+		State.HERD: _server_physics_herd(delta)
 
 
-func _to_state(new_state: State) -> void:
+func _server_to_state(new_state: State) -> void:
 	match new_state:
 		State.IDLE:
 			if _state != State.WANDER:
@@ -55,22 +55,22 @@ func _to_state(new_state: State) -> void:
 	_state = new_state
 
 
-func _physics_idle(_delta: float) -> void:
+func _server_physics_idle(_delta: float) -> void:
 	pass
 
 
-func _physics_wander(delta: float) -> void:
+func _server_physics_wander(delta: float) -> void:
 	var distance_to_target := global_position.distance_to(_wandering_to)
 	
 	if distance_to_target > speed * delta:
-		var collided = _move_to(_wandering_to, delta)
+		var collided = _server_move_to(_wandering_to, delta)
 		if collided:
-			_stop()
+			_server_stop()
 	else:
-		_stop()
+		_server_stop()
 
 
-func _physics_herd(delta: float) -> void:
+func _server_physics_herd(delta: float) -> void:
 	var shepherd_position_sum := Vector2.ZERO
 	
 	for _shepherd in herding_shepherds:
@@ -89,17 +89,17 @@ func _physics_herd(delta: float) -> void:
 	else:
 		direction = Vector2.ZERO
 	
-	_move_in_direction(direction, delta)
+	_server_move_in_direction(direction, delta)
 
 
-func herd(shepherd: Shepherd) -> void:
+func server_herd(shepherd: Shepherd) -> void:
 	if _state != State.HERD:
-		_to_state(State.HERD)
+		_server_to_state(State.HERD)
 	
-	_add_herding_shepherd(shepherd)
+	_server_add_herding_shepherd(shepherd)
 
 
-func _add_herding_shepherd(shepherd: Shepherd) -> void:
+func _server_add_herding_shepherd(shepherd: Shepherd) -> void:
 	for current_shepherd in herding_shepherds:
 		if current_shepherd.server_player == shepherd.server_player:
 			return
@@ -107,14 +107,14 @@ func _add_herding_shepherd(shepherd: Shepherd) -> void:
 	herding_shepherds.push_back(shepherd)
 
 
-func unherd(shepherd: Shepherd) -> void:
-	_remove_herding_shepherd(shepherd)
+func server_unherd(shepherd: Shepherd) -> void:
+	_server_remove_herding_shepherd(shepherd)
 	
 	if herding_shepherds.is_empty():
-		_stop()
+		_server_stop()
 
 
-func _remove_herding_shepherd(shepherd: Shepherd) -> void:
+func _server_remove_herding_shepherd(shepherd: Shepherd) -> void:
 	var shepherd_i: int = -1
 	
 	for i in herding_shepherds.size():
@@ -128,12 +128,12 @@ func _remove_herding_shepherd(shepherd: Shepherd) -> void:
 		herding_shepherds.remove_at(shepherd_i)
 
 
-func _stop() -> void:
+func _server_stop() -> void:
 	velocity = Vector2.ZERO
-	_to_state(State.IDLE)
+	_server_to_state(State.IDLE)
 
 
-func _move_in_direction(direction: Vector2, delta: float) -> bool:
+func _server_move_in_direction(direction: Vector2, delta: float) -> bool:
 	rpc("animation_set_facing", direction)
 	
 	var target_velocity := direction * speed
@@ -147,12 +147,12 @@ func _move_in_direction(direction: Vector2, delta: float) -> bool:
 	return move_and_slide()
 
 
-func _move_to(target_position: Vector2, delta: float) -> bool:
+func _server_move_to(target_position: Vector2, delta: float) -> bool:
 	var direction := global_position.direction_to(
 		target_position
 	)
 	
-	return _move_in_direction(direction, delta)
+	return _server_move_in_direction(direction, delta)
 
 
 @rpc("authority", "call_local", "unreliable")
@@ -166,7 +166,7 @@ func animation_set_state(state: String) -> void:
 	_animation_state.travel(state)
 
 
-func _on_wander(target_position: Vector2) -> void:
+func _server_on_wander(target_position: Vector2) -> void:
 	if _state in [State.IDLE, State.WANDER]:
 		_wandering_to = target_position
-		_to_state(State.WANDER)
+		_server_to_state(State.WANDER)

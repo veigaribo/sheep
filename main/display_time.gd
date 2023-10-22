@@ -16,10 +16,10 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	if _running:
-		set_text(_format())
+		set_text(_server_format())
 
 
-func _format() -> String:
+func _server_format() -> String:
 	var current_msec := Time.get_ticks_msec()
 	var elapsed := current_msec - _start
 	

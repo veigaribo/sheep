@@ -42,7 +42,7 @@ func _on_herding(body: Node2D) -> void:
 		_animation_state.travel("Herding")
 		
 		if multiplayer.is_server():
-			body.herd(self)
+			body.server_herd(self)
 
 
 func _on_not_herding(body: Node2D) -> void:
@@ -53,4 +53,4 @@ func _on_not_herding(body: Node2D) -> void:
 			_animation_state.travel("Idle")
 		
 		if multiplayer.is_server():
-			body.unherd(self)
+			body.server_unherd(self)
