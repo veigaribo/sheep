@@ -252,7 +252,7 @@ texture_filter = 1
 texture = ExtResource("2_7lqoa")
 hframes = 8
 vframes = 3
-frame = 3
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 7)
@@ -283,4 +283,4 @@ stream = ExtResource("3_e64oc")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7vur3")
 
-[connection signal="wander" from="Wanderer" to="." method="_on_wander"]
+[connection signal="wander" from="Wanderer" to="." method="_server_on_wander"]
