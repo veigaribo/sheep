@@ -12,6 +12,7 @@ var shepherd_scene: Resource
 @onready var main_menu := main_menu_scene.instantiate() as Control
 
 @onready var _timer := $Timer as CountdownTimer
+@onready var _player_names := $HUD/PlayerNames as Label
 @onready var _tree := get_tree()
 
 
@@ -41,6 +42,17 @@ func _ready() -> void:
 		for id in shepherds:
 			var shepherd := shepherds[id] as Shepherd
 			add_child(shepherd)
+		
+		if multiplayer.is_server():
+			var player_names = shepherds[1].server_player.name
+			
+			for id in shepherds:
+				if id == 1: continue
+				
+				player_names += ", "
+				player_names += shepherds[id].server_player.name
+			
+			_player_names.set_text(player_names)
 	else:
 		# Singleplayer
 		var shepherd := _get_shepherd_scene().instantiate() as Shepherd
