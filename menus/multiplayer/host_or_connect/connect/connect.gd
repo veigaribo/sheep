@@ -43,9 +43,11 @@ func _get_player_name() -> String:
 	return name
 
 
-func _go_to_lobby(player_id: int):
-	var lobby := lobby_scene.instantiate() as Lobby
+func _go_to_lobby():
+	var player_id := multiplayer.get_unique_id()
 	var player := Player.new(player_id, player_name)
+	
+	var lobby := lobby_scene.instantiate() as Lobby
 	lobby.set_player(player)
 	
 	var root := $/root
@@ -55,8 +57,7 @@ func _go_to_lobby(player_id: int):
 
 
 func _on_connected():
-	var id := multiplayer.get_unique_id()
-	_go_to_lobby(id)
+	_go_to_lobby()
 
 
 func _on_not_connected():

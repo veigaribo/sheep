@@ -28,7 +28,7 @@ func _on_ok_pressed():
 	peer.create_server(port, max_players)
 	multiplayer.set_multiplayer_peer(peer)
 	
-	_go_to_lobby(1)
+	_go_to_lobby()
 
 
 func _get_player_name() -> String:
@@ -51,9 +51,11 @@ func _get_max_players() -> int:
 	return max_players
 
 
-func _go_to_lobby(player_id: int):
-	var lobby := lobby_scene.instantiate() as Lobby
+func _go_to_lobby():
+	var player_id := multiplayer.get_unique_id()
 	var player := Player.new(player_id, player_name)
+	
+	var lobby := lobby_scene.instantiate() as Lobby
 	lobby.set_player(player)
 	
 	var root := $/root
