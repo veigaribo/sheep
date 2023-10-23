@@ -71,21 +71,24 @@ func _server_physics_wander(delta: float) -> void:
 
 
 func _server_physics_herd(delta: float) -> void:
-	var shepherd_position_sum := Vector2.ZERO
+	var push_sum := Vector2.ZERO
 	
 	for _shepherd in herding_shepherds:
 		var shepherd := _shepherd as Shepherd
 		
 		var shepherd_pos := shepherd.get_global_position()
-		shepherd_position_sum += shepherd_pos
+		var away_direction = global_position - shepherd_pos
+		
+		var distance = away_direction.length()
+		var push_force = 1.0 / (distance * distance)
+		
+		push_sum += away_direction * push_force
 	
-	var average_shepherd_position := shepherd_position_sum / herding_shepherds.size()
-	
-	var diff_pos := global_position - average_shepherd_position
+	var average_push := push_sum / herding_shepherds.size()
 	
 	var direction: Vector2
-	if not is_zero_approx(diff_pos.length()):
-		direction = diff_pos.normalized()
+	if not is_zero_approx(average_push.length()):
+		direction = average_push.normalized()
 	else:
 		direction = Vector2.ZERO
 	
