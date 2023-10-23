@@ -161,7 +161,7 @@ process_mode = 2
 stream = ExtResource("14_ylywf")
 script = ExtResource("14_5l3r1")
 
-[connection signal="kickoff" from="Timer" to="HUD/Countdown" method="_on_timer_kickoff"]
+[connection signal="kickoff" from="." to="HUD/Countdown" method="_on_main_kickoff"]
 [connection signal="kickoff" from="Timer" to="HUD/Time/Display" method="_on_timer_kickoff"]
 [connection signal="kickoff" from="Timer" to="CountdownSoundPlayer" method="_on_timer_kickoff"]
 [connection signal="tick" from="Timer" to="HUD/Countdown" method="_on_timer_tick"]

@@ -5,10 +5,8 @@ extends Node
 signal player_joined(player: Player)
 signal player_quit(player: Player)
 
-
 var self_player: Player = null
 var is_multiplayer := false
-
 
 var server_players := {}
 

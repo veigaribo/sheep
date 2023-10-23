@@ -2,6 +2,8 @@ class_name Main
 extends Node2D
 
 
+signal kickoff
+
 @export_file var main_menu_path: String
 @export_file var shepherd_scene_path: String
 
@@ -34,8 +36,10 @@ func _ready() -> void:
 		multiplayer.peer_disconnected.connect(server_player_disconnected)
 	
 	_tree.paused = true
-	await _timer.kickoff
-	_tree.paused = false
+	
+	if multiplayer.is_server():
+		_timer.kickoff.connect(func _server_kickoff():
+			rpc("do_kickoff"))
 
 
 func _server_create_shepherd(player: Player):
@@ -68,6 +72,12 @@ func _get_shepherd_scene() -> Resource:
 		shepherd_scene = load(shepherd_scene_path)
 	
 	return shepherd_scene
+
+
+@rpc("authority", "call_local", "reliable")
+func do_kickoff():
+	_tree.paused = false
+	kickoff.emit()
 
 
 func client_disconnected():

@@ -10,5 +10,5 @@ func _on_timer_tick(remaining: int) -> void:
 	set_text(str(remaining))
 
 
-func _on_timer_kickoff() -> void:
+func _on_main_kickoff() -> void:
 	queue_free()

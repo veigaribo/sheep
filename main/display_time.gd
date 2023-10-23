@@ -37,5 +37,8 @@ func _on_win() -> void:
 
 
 func _on_timer_kickoff() -> void:
+	if not multiplayer.is_server():
+		return
+	
 	_running = true
 	_start = Time.get_ticks_msec()
