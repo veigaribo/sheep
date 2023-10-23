@@ -20,57 +20,63 @@ position = Vector2(160, 96)
 scale = Vector2(0.166667, 0.16)
 texture = ExtResource("1_6c53e")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
 offset_right = 320.0
-offset_bottom = 191.0
+offset_bottom = 192.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/CenterContainer"]
 layout_mode = 2
 
-[node name="MessageLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="MessageLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="NameLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
 
-[node name="NameEdit" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+[node name="NameEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 max_length = 128
 
-[node name="IpAddrLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="IpAddrLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "Ip address"
+text = "Address"
 
-[node name="IpAddrEdit" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+[node name="IpAddrEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="PortLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="PortLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Port"
 horizontal_alignment = 1
 
-[node name="PortEdit" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+[node name="PortEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "2018"
 alignment = 1
 max_length = 5
 
-[node name="Ok" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Ok" type="Button" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Ok"
 
-[node name="ReturnButton" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_nryll")]
+[node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_nryll")]
 layout_mode = 2
 text = "Return"
-parent_scene = NodePath("../../..")
+parent_scene = NodePath("../../../..")
 next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="ScrollContainer/CenterContainer/VBoxContainer/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="ScrollContainer/CenterContainer/VBoxContainer/ReturnButton" to="." method="_on_return_pressed"]

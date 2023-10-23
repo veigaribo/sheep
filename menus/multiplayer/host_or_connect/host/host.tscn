@@ -61,6 +61,17 @@ text = "2018"
 alignment = 1
 max_length = 5
 
+[node name="MaxPlayersLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Max players"
+horizontal_alignment = 1
+
+[node name="MaxPlayersEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "2"
+alignment = 1
+max_length = 4
+
 [node name="AdvancedToggle" type="CheckButton" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Advanced"
@@ -72,7 +83,7 @@ layout_mode = 2
 
 [node name="IpAddrLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer/AdvancedContainer"]
 layout_mode = 2
-text = "Ip address"
+text = "IP address"
 horizontal_alignment = 1
 
 [node name="IpAddrEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer/AdvancedContainer"]
@@ -80,17 +91,6 @@ layout_mode = 2
 text = "0.0.0.0"
 alignment = 1
 max_length = 15
-
-[node name="MaxPlayersLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer/AdvancedContainer"]
-layout_mode = 2
-text = "Max players"
-horizontal_alignment = 1
-
-[node name="MaxPlayersEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer/AdvancedContainer"]
-layout_mode = 2
-text = "2"
-alignment = 1
-max_length = 4
 
 [node name="Ok" type="Button" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -104,3 +104,4 @@ next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 
 [connection signal="toggled" from="ScrollContainer/CenterContainer/VBoxContainer/AdvancedToggle" to="ScrollContainer/CenterContainer/VBoxContainer/AdvancedToggle" method="_on_toggled"]
 [connection signal="pressed" from="ScrollContainer/CenterContainer/VBoxContainer/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="ScrollContainer/CenterContainer/VBoxContainer/ReturnButton" to="." method="_on_return_pressed"]
