@@ -6,16 +6,12 @@ extends Control
 @export_file var main_scene_path: String
 @export_file var player_name_scene_path: String
 
-@onready var previous_scene := load(previous_scene_path)
-@onready var previous := previous_scene.instantiate() as Control
-
-@onready var main_scene := load(main_scene_path)
-@onready var main := main_scene.instantiate() as Main
-
 @onready var player_name_scene := load(player_name_scene_path)
 @onready var player_names := $CenterContainer/VBoxContainer/PlayerNames
 @onready var ok_button := $CenterContainer/VBoxContainer/Cockpit/Ok as Button
 
+
+# This class (and ONLY this class) manages multiplayer_data
 
 func _ready():
 	var self_player = multiplayer_data.self_player
@@ -24,7 +20,8 @@ func _ready():
 	push_warning("player ", self_player.multiplayer_id, ": ", self_player.name)
 	
 	if multiplayer.is_server():
-		multiplayer_data.insert_player(self_player)
+		multiplayer_data.server_clear_players()
+		multiplayer_data.server_insert_player(self_player)
 		
 		var player_name_label := player_name_scene.instantiate() as Label
 		player_name_label.set_text(self_player.name)
@@ -42,7 +39,7 @@ func _ready():
 
 
 func server_register_unnamed_player(id: int):
-	multiplayer_data.insert_player(Player.new(id, "Unnamed"))
+	multiplayer_data.server_insert_player(Player.new(id, "Unnamed"))
 	
 	var player_name_label := player_name_scene.instantiate() as Label
 	player_name_label.set_text("Unnamed")
@@ -52,7 +49,7 @@ func server_register_unnamed_player(id: int):
 
 
 func server_unregister_player(id: int):
-	multiplayer_data.remove_player(id)
+	multiplayer_data.server_remove_player(id)
 	
 	var player_name_label = player_names.get_node("PlayerName" + str(id))
 	player_name_label.queue_free()
@@ -61,7 +58,7 @@ func server_unregister_player(id: int):
 @rpc("any_peer", "call_remote", "reliable")
 func server_update_name(name: String):
 	var id = multiplayer.get_remote_sender_id()
-	multiplayer_data.rename_player(id, name)
+	multiplayer_data.server_rename_player(id, name)
 	
 	var player_name_label = player_names.get_node("PlayerName" + str(id))
 	player_name_label.set_text(name)
@@ -88,10 +85,19 @@ func _go_to_previous():
 
 @rpc("authority", "call_local", "reliable")
 func go_to_main():
-	get_tree().change_scene_to_file(main_scene_path)
+	set_visible(false)
+	
+	var main_scene := load(main_scene_path)
+	var main := main_scene.instantiate() as Main
+	
+	main.returning_to_lobby.connect(_on_returning_to_lobby)
+	add_sibling(main)
 
 
 func _on_ok_pressed():
 	if multiplayer.is_server():
-		multiplayer.get_multiplayer_peer().set_refuse_new_connections(true)
 		rpc("go_to_main")
+
+
+func _on_returning_to_lobby():
+	set_visible(true)

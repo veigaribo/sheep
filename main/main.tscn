@@ -170,3 +170,5 @@ script = ExtResource("14_5l3r1")
 [connection signal="corralled" from="Corral" to="HUD/Sheep Coralled/Count" method="_on_corralled"]
 [connection signal="won" from="Corral" to="Win" method="_on_win"]
 [connection signal="won" from="Corral" to="HUD/Time/Display" method="_on_win"]
+[connection signal="returning_to_lobby" from="Esc Handler" to="." method="_on_esc_handler_returning_to_lobby"]
+[connection signal="server_someone_returning_to_lobby" from="Esc Handler" to="." method="_server_on_esc_handler_someone_returning_to_lobby"]

@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal kickoff
+signal returning_to_lobby
 
 @export_file var main_menu_path: String
 @export_file var shepherd_scene_path: String
@@ -31,9 +32,7 @@ func _ready() -> void:
 		_server_create_shepherds()
 	
 	multiplayer.server_disconnected.connect(client_disconnected)
-	
-	if multiplayer.is_server():
-		multiplayer.peer_disconnected.connect(server_player_disconnected)
+	multiplayer_data.server_player_quit.connect(server_player_disconnected)
 	
 	_tree.paused = true
 	
@@ -52,12 +51,17 @@ func _server_create_shepherd(player: Player):
 
 
 func _server_create_shepherds():
-	for player in multiplayer_data.get_players():
+	for player in multiplayer_data.server_get_players():
 		_server_create_shepherd(player)
 
 
+func _server_remove_shepherd(id: int):
+	if id in server_shepherds:
+		server_shepherds[id].queue_free()
+
+
 func _server_display_player_names():
-	var players := multiplayer_data.get_players()
+	var players := multiplayer_data.server_get_players()
 	var player_names := players.pop_front().name as String
 	
 	for player in players:
@@ -85,8 +89,17 @@ func client_disconnected():
 	get_tree().change_scene_to_file(main_menu_path)
 
 
-func server_player_disconnected(id: int):
-	multiplayer_data.remove_player(id)
-	
-	if id in server_shepherds:
-		server_shepherds[id].queue_free()
+func server_player_disconnected(player: Player):
+	_server_remove_shepherd(player.multiplayer_id)
+
+
+# This client is returning to lobby
+func _on_esc_handler_returning_to_lobby():
+	returning_to_lobby.emit()
+	queue_free()
+
+
+# This is the server and some client is returning to lobby
+func _server_on_esc_handler_someone_returning_to_lobby(id):
+	if multiplayer.is_server():
+		_server_remove_shepherd(id)
