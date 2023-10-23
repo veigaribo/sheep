@@ -45,15 +45,17 @@ text = "Name"
 horizontal_alignment = 1
 
 [node name="NameEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
 alignment = 1
 max_length = 128
 
-[node name="IpAddrLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
+[node name="AddrLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Address"
+horizontal_alignment = 1
 
-[node name="IpAddrEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
+[node name="AddrEdit" type="LineEdit" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 

@@ -42,7 +42,7 @@ layout_mode = 2
 
 [node name="Ok" type="Button" parent="CenterContainer/VBoxContainer/Cockpit"]
 layout_mode = 2
-text = "Ok"
+text = "Start"
 
 [node name="ReturnButton" parent="CenterContainer/VBoxContainer/Cockpit" instance=ExtResource("2_r1ybc")]
 layout_mode = 2

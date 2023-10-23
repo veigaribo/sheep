@@ -10,7 +10,7 @@ var player_name: String
 @onready var message_label = $ScrollContainer/CenterContainer/VBoxContainer/MessageLabel as Label
 
 @onready var name_edit := $ScrollContainer/CenterContainer/VBoxContainer/NameEdit as LineEdit
-@onready var ip_addr_edit := $ScrollContainer/CenterContainer/VBoxContainer/IpAddrEdit as LineEdit
+@onready var ip_addr_edit := $ScrollContainer/CenterContainer/VBoxContainer/AddrEdit as LineEdit
 @onready var port_edit := $ScrollContainer/CenterContainer/VBoxContainer/PortEdit as LineEdit
 
 
