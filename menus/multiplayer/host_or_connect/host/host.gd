@@ -3,7 +3,7 @@ extends Control
 
 @export_file var lobby_scene_path: String
 
-var player_name: String
+var data = {}
 
 @onready var lobby_scene := load(lobby_scene_path)
 
@@ -14,6 +14,36 @@ var player_name: String
 @onready var max_players_edit := $ScrollContainer/CenterContainer/VBoxContainer/MaxPlayersEdit as LineEdit
 
 @onready var ip_addr_edit := $ScrollContainer/CenterContainer/VBoxContainer/AdvancedContainer/IpAddrEdit as LineEdit
+
+
+func _ready():
+	_load_defaults()
+
+
+func _load_defaults():
+	config.load()
+	
+	var default_name = config.get_default_multiplayer_name()
+	var default_port = config.get_default_multiplayer_host_port()
+	var default_max_players = config.get_default_multiplayer_host_max_players()
+	var default_ip_addr = config.get_default_multiplayer_host_ip_addr()
+	
+	if default_name != null:
+		name_edit.set_text(default_name)
+	if default_port != null:
+		port_edit.set_text(str(default_port))
+	if default_max_players != null:
+		max_players_edit.set_text(str(default_max_players))
+	if default_ip_addr != null:
+		ip_addr_edit.set_text(default_ip_addr)
+
+
+func _persist_defaults():
+	config.set_default_multiplayer_name(data['name'])
+	config.set_default_multiplayer_host_port(data['port'])
+	config.set_default_multiplayer_host_max_players(data['max_players'])
+	config.set_default_multiplayer_host_ip_addr(data['ip_address'])
+	config.persist()
 
 
 func _on_ok_pressed():
@@ -30,8 +60,14 @@ func _on_ok_pressed():
 	if null in [port, max_players, ip_address, maybe_player_name]:
 		return
 	
-	player_name = maybe_player_name as String
+	data = {
+		'name': maybe_player_name,
+		'port': port,
+		'max_players': max_players,
+		'ip_address': ip_address,
+	}
 	
+	_persist_defaults()
 	var peer = ENetMultiplayerPeer.new()
 	peer.set_bind_ip(ip_address)
 	
@@ -117,7 +153,7 @@ func _get_ip_addr():
 
 func _go_to_lobby():
 	var player_id := multiplayer.get_unique_id()
-	var player := Player.new(player_id, player_name)
+	var player := Player.new(player_id, data['name'])
 	multiplayer_data.self_player = player
 	
 	get_tree().change_scene_to_file(lobby_scene_path)

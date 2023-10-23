@@ -3,20 +3,43 @@ extends Control
 
 @export_file var lobby_scene_path: String
 
-var player_name: String
+var data = {}
 
 @onready var lobby_scene := load(lobby_scene_path)
 
 @onready var message_label = $ScrollContainer/CenterContainer/VBoxContainer/MessageLabel as Label
 
 @onready var name_edit := $ScrollContainer/CenterContainer/VBoxContainer/NameEdit as LineEdit
-@onready var ip_addr_edit := $ScrollContainer/CenterContainer/VBoxContainer/AddrEdit as LineEdit
+@onready var addr_edit := $ScrollContainer/CenterContainer/VBoxContainer/AddrEdit as LineEdit
 @onready var port_edit := $ScrollContainer/CenterContainer/VBoxContainer/PortEdit as LineEdit
 
 
 func _ready():
+	_load_defaults()
 	multiplayer.connected_to_server.connect(_on_connected)
 	multiplayer.connection_failed.connect(_on_not_connected)
+
+
+func _load_defaults():
+	config.load()
+	
+	var default_name = config.get_default_multiplayer_name()
+	var default_addr = config.get_default_multiplayer_connect_addr()
+	var default_port = config.get_default_multiplayer_connect_port()
+	
+	if default_name != null:
+		name_edit.set_text(default_name)
+	if default_addr != null:
+		addr_edit.set_text(default_addr)
+	if default_port != null:
+		port_edit.set_text(str(default_port))
+
+
+func _persist_defaults():
+	config.set_default_multiplayer_name(data['name'])
+	config.set_default_multiplayer_connect_addr(data['address'])
+	config.set_default_multiplayer_connect_port(data['port'])
+	config.persist()
 
 
 func _on_ok_pressed():
@@ -33,8 +56,13 @@ func _on_ok_pressed():
 	if null in [address, port, maybe_player_name]:
 		return
 	
-	player_name = maybe_player_name
+	data = {
+		'name': maybe_player_name,
+		'address': address,
+		'port': port,
+	}
 	
+	_persist_defaults()
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_client(address, port)
 	
@@ -58,7 +86,7 @@ func _get_player_name():
 
 
 func _get_addr():
-	var address := ip_addr_edit.get_text().strip_edges()
+	var address := addr_edit.get_text().strip_edges()
 	
 	if address.length() == 0:
 		_display_message("Address should not be empty.")
@@ -97,7 +125,7 @@ func _go_to_lobby():
 
 func _on_connected():
 	var player_id := multiplayer.get_unique_id()
-	var player := Player.new(player_id, player_name)
+	var player := Player.new(player_id, data['name'])
 	multiplayer_data.self_player = player
 	
 	_go_to_lobby()

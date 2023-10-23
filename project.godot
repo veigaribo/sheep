@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 rng="*res://globals/rng.gd"
 multiplayer_data="*res://globals/multiplayer_data.gd"
+config="*res://globals/config.gd"
 
 [debug]
 
