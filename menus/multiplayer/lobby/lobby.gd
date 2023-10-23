@@ -6,10 +6,6 @@ extends Control
 @export_file var main_scene_path: String
 @export_file var player_name_scene_path: String
 
-var players = {}
-
-@onready var self_player: Player
-
 @onready var previous_scene := load(previous_scene_path)
 @onready var previous := previous_scene.instantiate() as Control
 
@@ -21,17 +17,14 @@ var players = {}
 @onready var ok_button := $CenterContainer/VBoxContainer/Cockpit/Ok as Button
 
 
-func set_player(player: Player):
-	self_player = player
-
-
 func _ready():
+	var self_player = multiplayer_data.self_player
+	multiplayer_data.is_multiplayer = true
 	# To distinguish logs
 	push_warning("player ", self_player.multiplayer_id, ": ", self_player.name)
 	
 	if multiplayer.is_server():
-		main.set_multiplayer(true)
-		main.server_add_player(self_player)
+		multiplayer_data.insert_player(self_player)
 		
 		var player_name_label := player_name_scene.instantiate() as Label
 		player_name_label.set_text(self_player.name)
@@ -49,7 +42,7 @@ func _ready():
 
 
 func server_register_unnamed_player(id: int):
-	main.server_add_player(Player.new(id, "Unnamed"))
+	multiplayer_data.insert_player(Player.new(id, "Unnamed"))
 	
 	var player_name_label := player_name_scene.instantiate() as Label
 	player_name_label.set_text("Unnamed")
@@ -59,7 +52,7 @@ func server_register_unnamed_player(id: int):
 
 
 func server_unregister_player(id: int):
-	main.server_remove_player(id)
+	multiplayer_data.remove_player(id)
 	
 	var player_name_label = player_names.get_node("PlayerName" + str(id))
 	player_name_label.queue_free()
@@ -68,7 +61,7 @@ func server_unregister_player(id: int):
 @rpc("any_peer", "call_remote", "reliable")
 func server_update_name(name: String):
 	var id = multiplayer.get_remote_sender_id()
-	main.server_update_player(Player.new(id, name))
+	multiplayer_data.rename_player(id, name)
 	
 	var player_name_label = player_names.get_node("PlayerName" + str(id))
 	player_name_label.set_text(name)
@@ -82,9 +75,6 @@ func _on_return_button_pressed():
 	var peer = multiplayer.get_multiplayer_peer()
 	
 	if multiplayer.is_server():
-		for player_id in players:
-			peer.disconnect_peer(player_id)
-		
 		_go_to_previous()
 		peer.close()
 	else:
@@ -93,18 +83,12 @@ func _on_return_button_pressed():
 
 
 func _go_to_previous():
-	var root := $/root
-	root.remove_child(self)
-	root.add_child(previous)
-	queue_free()
+	get_tree().change_scene_to_file(previous_scene_path)
 
 
 @rpc("authority", "call_local", "reliable")
 func go_to_main():
-	var root := $/root
-	root.remove_child(self)
-	root.add_child(main)
-	queue_free()
+	get_tree().change_scene_to_file(main_scene_path)
 
 
 func _on_ok_pressed():

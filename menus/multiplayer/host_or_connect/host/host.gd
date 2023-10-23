@@ -69,11 +69,6 @@ func _get_max_players() -> int:
 func _go_to_lobby():
 	var player_id := multiplayer.get_unique_id()
 	var player := Player.new(player_id, player_name)
+	multiplayer_data.self_player = player
 	
-	var lobby := lobby_scene.instantiate() as Lobby
-	lobby.set_player(player)
-	
-	var root := $/root
-	root.remove_child(self)
-	root.add_child(lobby)
-	queue_free()
+	get_tree().change_scene_to_file(lobby_scene_path)

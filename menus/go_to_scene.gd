@@ -11,10 +11,4 @@ func set_scene(new_scene: String):
 
 
 func _on_pressed():
-	var next_scene := load(next_scene_path)
-	var next := next_scene.instantiate() as Node
-	
-	var root := $/root
-	root.remove_child(parent_scene)
-	root.add_child(next)
-	queue_free()
+	get_tree().change_scene_to_file(next_scene_path)

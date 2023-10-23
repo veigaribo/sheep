@@ -166,7 +166,10 @@ func animation_set_state(state: String) -> void:
 	_animation_state.travel(state)
 
 
-func _server_on_wander(target_position: Vector2) -> void:
+func _on_wander(target_position: Vector2) -> void:
+	if not multiplayer.is_server():
+		return
+	
 	if _state in [State.IDLE, State.WANDER]:
 		_wandering_to = target_position
 		_server_to_state(State.WANDER)

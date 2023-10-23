@@ -8,8 +8,6 @@ extends Node2D
 var server_shepherds := {}
 var shepherd_scene: Resource
 
-var is_multiplayer := false
-
 @onready var main_menu_scene := load(main_menu_path)
 @onready var main_menu := main_menu_scene.instantiate() as Control
 
@@ -18,52 +16,17 @@ var is_multiplayer := false
 @onready var _tree := get_tree()
 
 
-func server_add_player(player: Player):
-	var shepherd := _get_shepherd_scene().instantiate() as Shepherd
-	shepherd.server_player = player
-	shepherd.set_name("Shepherd" + str(player.multiplayer_id))
-	
-	server_shepherds[player.multiplayer_id] = shepherd
-
-
-func server_remove_player(id: int):
-	server_shepherds.erase(id)
-	
-	var maybe_spawned = get_node("Shepherd" + str(id))
-	if maybe_spawned != null:
-		maybe_spawned.queue_free()
-
-
-func server_update_player(player: Player):
-	server_shepherds[player.multiplayer_id].server_player = player
-
-
-func set_multiplayer(is_multiplayer: bool):
-	self.is_multiplayer = is_multiplayer
-
-
 func _ready() -> void:
-	if is_multiplayer:
+	if multiplayer_data.is_multiplayer:
 		# Multiplayer
-		for id in server_shepherds:
-			var shepherd := server_shepherds[id] as Shepherd
-			add_child(shepherd)
-		
 		if multiplayer.is_server():
-			var player_names = server_shepherds[1].server_player.name
-			
-			for id in server_shepherds:
-				if id == 1: continue
-				
-				player_names += ", "
-				player_names += server_shepherds[id].server_player.name
-			
-			_player_names.set_text(player_names)
+			_server_display_player_names()
 	else:
 		# Singleplayer
-		var shepherd := _get_shepherd_scene().instantiate() as Shepherd
-		shepherd.server_player = Player.new(1, "")
-		add_child(shepherd)
+		_server_create_shepherd(Player.new(1, ""))
+	
+	if multiplayer.is_server():
+		_server_create_shepherds()
 	
 	multiplayer.server_disconnected.connect(client_disconnected)
 	
@@ -75,6 +38,31 @@ func _ready() -> void:
 	_tree.paused = false
 
 
+func _server_create_shepherd(player: Player):
+	var shepherd := _get_shepherd_scene().instantiate() as Shepherd
+	shepherd.server_player = player
+	shepherd.set_name("Shepherd" + str(player.multiplayer_id))
+	
+	server_shepherds[player.multiplayer_id] = shepherd
+	add_child(shepherd)
+
+
+func _server_create_shepherds():
+	for player in multiplayer_data.get_players():
+		_server_create_shepherd(player)
+
+
+func _server_display_player_names():
+	var players := multiplayer_data.get_players()
+	var player_names := players.pop_front().name as String
+	
+	for player in players:
+		player_names += ", "
+		player_names += player.name
+	
+	_player_names.set_text(player_names)
+
+
 func _get_shepherd_scene() -> Resource:
 	if shepherd_scene == null:
 		shepherd_scene = load(shepherd_scene_path)
@@ -83,11 +71,12 @@ func _get_shepherd_scene() -> Resource:
 
 
 func client_disconnected():
-	var root := $/root
-	root.remove_child(self)
-	root.add_child(main_menu)
-	queue_free()
+	get_tree().paused = false
+	get_tree().change_scene_to_file(main_menu_path)
 
 
 func server_player_disconnected(id: int):
-	server_remove_player(id)
+	multiplayer_data.remove_player(id)
+	
+	if id in server_shepherds:
+		server_shepherds[id].queue_free()
