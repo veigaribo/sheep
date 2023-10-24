@@ -2,7 +2,6 @@ class_name GoToSceneButton
 extends Button
 
 
-@export var parent_scene: Node
 @export_file var next_scene_path: String
 
 

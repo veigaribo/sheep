@@ -11,22 +11,22 @@ signal returning_to_lobby
 var server_shepherds := {}
 var shepherd_scene: Resource
 
-@onready var main_menu_scene := load(main_menu_path)
-@onready var main_menu := main_menu_scene.instantiate() as Control
-
 @onready var _timer := $Timer as CountdownTimer
 @onready var _player_names := $HUD/PlayerNames as Label
 @onready var _tree := get_tree()
 
 
 func _ready() -> void:
+	print('multiplayer ', multiplayer)
+	print('peer ', multiplayer.get_multiplayer_peer())
+	
 	if multiplayer_data.is_multiplayer:
 		# Multiplayer
 		if multiplayer.is_server():
 			_server_display_player_names()
 	else:
 		# Singleplayer
-		_server_create_shepherd(Player.new(1, ""))
+		_server_create_shepherd(Player.new(1, "", Color.WHITE))
 	
 	if multiplayer.is_server():
 		_server_create_shepherds()
@@ -43,11 +43,11 @@ func _ready() -> void:
 
 func _server_create_shepherd(player: Player):
 	var shepherd := _get_shepherd_scene().instantiate() as Shepherd
-	shepherd.server_player = player
+	shepherd.server_set_player(player)
 	shepherd.set_name("Shepherd" + str(player.multiplayer_id))
 	
 	server_shepherds[player.multiplayer_id] = shepherd
-	add_child(shepherd)
+	add_child(shepherd, true)
 
 
 func _server_create_shepherds():

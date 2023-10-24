@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvae1nuyragpc"]
+
+[ext_resource type="Script" path="res://menus/multiplayer/lobby/player_entry.gd" id="1_tk26d"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg453"]
+properties/0/path = NodePath("HBoxContainer/Label:text")
+properties/0/spawn = true
+properties/0/sync = false
+properties/0/watch = true
+properties/1/path = NodePath("HBoxContainer/Label:modulate")
+properties/1/spawn = true
+properties/1/sync = false
+properties/1/watch = true
+
+[node name="PlayerEntry" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tk26d")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jg453")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Loading..."
+horizontal_alignment = 1

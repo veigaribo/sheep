@@ -4,18 +4,22 @@ extends Control
 
 @export_file var previous_scene_path: String
 @export_file var main_scene_path: String
-@export_file var player_name_scene_path: String
+@export_file var player_entry_scene_path: String
 
-@onready var player_name_scene := load(player_name_scene_path)
-@onready var player_names := $CenterContainer/VBoxContainer/PlayerNames
+@onready var player_entry_scene := load(player_entry_scene_path)
+@onready var player_entries := $CenterContainer/VBoxContainer/PlayerEntries
 @onready var ok_button := $CenterContainer/VBoxContainer/Cockpit/Ok as Button
+@onready var color_selector := $CenterContainer/VBoxContainer/ColorSelector as ColorSelector
 
 
 # This class (and ONLY this class) manages multiplayer_data
 
 func _ready():
-	var self_player = multiplayer_data.self_player
 	multiplayer_data.is_multiplayer = true
+	
+	var self_player = multiplayer_data.self_player
+	color_selector.set_pick_color(self_player.color)
+	
 	# To distinguish logs
 	push_warning("player ", self_player.multiplayer_id, ": ", self_player.name)
 	
@@ -23,45 +27,40 @@ func _ready():
 		multiplayer_data.server_clear_players()
 		multiplayer_data.server_insert_player(self_player)
 		
-		var player_name_label := player_name_scene.instantiate() as Label
-		player_name_label.set_text(self_player.name)
-		player_name_label.set_name("PlayerName" + str(self_player.multiplayer_id))
+		var player_entry_label := player_entry_scene.instantiate() as LobbyPlayerEntry
+		player_entry_label.set_name("PlayerName" + str(self_player.multiplayer_id))
+		player_entry_label.set_player_id(self_player.multiplayer_id)
 		
-		player_names.add_child(player_name_label)
+		player_entries.add_child(player_entry_label)
 		
 		multiplayer.peer_connected.connect(server_register_unnamed_player)
 		multiplayer.peer_disconnected.connect(server_unregister_player)
 	else:
 		ok_button.set_visible(false)
-		rpc_id(1, "server_update_name", self_player.name)
+		rpc_id(1, "server_update_player", self_player.name, self_player.color)
 		
 		multiplayer.server_disconnected.connect(client_disconnected)
 
 
 func server_register_unnamed_player(id: int):
-	multiplayer_data.server_insert_player(Player.new(id, "Unnamed"))
+	multiplayer_data.server_insert_player(Player.new(id, "Loading...", Color.WHITE))
 	
-	var player_name_label := player_name_scene.instantiate() as Label
-	player_name_label.set_text("Unnamed")
-	player_name_label.set_name("PlayerName" + str(id))
+	var player_entry_label := player_entry_scene.instantiate() as LobbyPlayerEntry
+	player_entry_label.set_name("PlayerName" + str(id))
+	player_entry_label.set_player_id(id)
 	
-	player_names.add_child(player_name_label)
+	player_entries.add_child(player_entry_label)
 
 
 func server_unregister_player(id: int):
 	multiplayer_data.server_remove_player(id)
-	
-	var player_name_label = player_names.get_node("PlayerName" + str(id))
-	player_name_label.queue_free()
 
 
 @rpc("any_peer", "call_remote", "reliable")
-func server_update_name(name: String):
+func server_update_player(name: String, color: Color):
 	var id = multiplayer.get_remote_sender_id()
 	multiplayer_data.server_rename_player(id, name)
-	
-	var player_name_label = player_names.get_node("PlayerName" + str(id))
-	player_name_label.set_text(name)
+	multiplayer_data.server_recolor_player(id, color)
 
 
 func client_disconnected():
@@ -101,3 +100,14 @@ func _on_ok_pressed():
 
 func _on_returning_to_lobby():
 	set_visible(true)
+
+
+func _on_color_selector_color_changed(color):
+	var previous_player = multiplayer_data.self_player
+	var new_player = Player.new(previous_player.multiplayer_id, previous_player.name, color)
+	multiplayer_data.update_player(new_player)
+
+
+func _on_color_selector_color_changed_debounced(color):
+	config.set_default_multiplayer_color(color)
+	config.persist()

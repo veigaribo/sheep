@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dlh8jm3hdtx4r"]
+[gd_scene load_steps=5 format=3 uid="uid://dlh8jm3hdtx4r"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_0lbbv"]
+[ext_resource type="Script" path="res://menus/main_menu/main_menu.gd" id="1_jk7rs"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_csg7n"]
 [ext_resource type="Script" path="res://menus/main_menu/quit_button.gd" id="7_frk4o"]
 
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jk7rs")
 
 [node name="Christian" type="Sprite2D" parent="."]
 position = Vector2(160, 96.2501)
@@ -34,22 +36,19 @@ horizontal_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PlayButton" parent="CenterContainer/VBoxContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_csg7n")]
+[node name="PlayButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Play"
-parent_scene = NodePath("../../../..")
 next_scene_path = "res://main/main.tscn"
 
-[node name="MultiplayerButton" parent="CenterContainer/VBoxContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_csg7n")]
+[node name="MultiplayerButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Multiplayer"
-parent_scene = NodePath("../../../..")
 next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 
-[node name="CreditsButton" parent="CenterContainer/VBoxContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("2_csg7n")]
+[node name="CreditsButton" parent="CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_csg7n")]
 layout_mode = 2
 text = "Credits"
-parent_scene = NodePath("../../../..")
 next_scene_path = "res://menus/credits/credits.tscn"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]

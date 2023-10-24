@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu28gdxiit507"]
+
+[ext_resource type="Script" path="res://menus/multiplayer/color_selector.gd" id="1_v4vga"]
+
+[node name="ColorSelector" type="HBoxContainer"]
+script = ExtResource("1_v4vga")
+
+[node name="ColorLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Color"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+
+[node name="Debouncer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_color_changed"]
+[connection signal="toggled" from="ColorPickerButton" to="." method="_on_color_picker_toggled"]
+[connection signal="timeout" from="Debouncer" to="." method="_on_debouncer_timeout"]

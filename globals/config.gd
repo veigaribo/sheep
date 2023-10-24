@@ -13,6 +13,14 @@ func get_default_multiplayer_name():
 	return config_file.get_value("multiplayer", "default_name")
 
 
+func set_default_multiplayer_color(color: Color):
+	config_file.set_value("multiplayer", "default_color", color)
+
+
+func get_default_multiplayer_color():
+	return config_file.get_value("multiplayer", "default_color")
+
+
 func set_default_multiplayer_host_port(port: int):
 	config_file.set_value("multiplayer", "default_host_port", port)
 

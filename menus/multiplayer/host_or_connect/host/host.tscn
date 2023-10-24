@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cf3q6hagdskvo"]
+[gd_scene load_steps=6 format=3 uid="uid://cf3q6hagdskvo"]
 
 [ext_resource type="Script" path="res://menus/multiplayer/host_or_connect/host/host.gd" id="1_erbci"]
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_h5n4o"]
 [ext_resource type="Script" path="res://menus/multiplayer/host_or_connect/host/advanced_toggle.gd" id="2_wpg21"]
+[ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_4wvdq"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="3_k12pw"]
 
 [node name="Host" type="Control"]
@@ -51,6 +52,9 @@ layout_mode = 2
 alignment = 1
 max_length = 128
 
+[node name="ColorSelector" parent="ScrollContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_4wvdq")]
+layout_mode = 2
+
 [node name="PortLabel" type="Label" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Port"
@@ -97,10 +101,9 @@ max_length = 15
 layout_mode = 2
 text = "Ok"
 
-[node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" node_paths=PackedStringArray("parent_scene") instance=ExtResource("3_k12pw")]
+[node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_k12pw")]
 layout_mode = 2
 text = "Return"
-parent_scene = NodePath("../../../..")
 next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 
 [connection signal="toggled" from="ScrollContainer/CenterContainer/VBoxContainer/AdvancedToggle" to="ScrollContainer/CenterContainer/VBoxContainer/AdvancedToggle" method="_on_toggled"]

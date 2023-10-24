@@ -5,11 +5,10 @@ extends Control
 
 var data = {}
 
-@onready var lobby_scene := load(lobby_scene_path)
-
 @onready var message_label = $ScrollContainer/CenterContainer/VBoxContainer/MessageLabel as Label
 
 @onready var name_edit := $ScrollContainer/CenterContainer/VBoxContainer/NameEdit as LineEdit
+@onready var color_edit := $ScrollContainer/CenterContainer/VBoxContainer/ColorSelector as ColorSelector
 @onready var port_edit := $ScrollContainer/CenterContainer/VBoxContainer/PortEdit as LineEdit
 @onready var max_players_edit := $ScrollContainer/CenterContainer/VBoxContainer/MaxPlayersEdit as LineEdit
 
@@ -24,12 +23,15 @@ func _load_defaults():
 	config.load()
 	
 	var default_name = config.get_default_multiplayer_name()
+	var default_color = config.get_default_multiplayer_color()
 	var default_port = config.get_default_multiplayer_host_port()
 	var default_max_players = config.get_default_multiplayer_host_max_players()
 	var default_ip_addr = config.get_default_multiplayer_host_ip_addr()
 	
 	if default_name != null:
 		name_edit.set_text(default_name)
+	if default_color != null:
+		color_edit.set_pick_color(default_color)
 	if default_port != null:
 		port_edit.set_text(str(default_port))
 	if default_max_players != null:
@@ -40,6 +42,7 @@ func _load_defaults():
 
 func _persist_defaults():
 	config.set_default_multiplayer_name(data['name'])
+	config.set_default_multiplayer_color(data['color'])
 	config.set_default_multiplayer_host_port(data['port'])
 	config.set_default_multiplayer_host_max_players(data['max_players'])
 	config.set_default_multiplayer_host_ip_addr(data['ip_address'])
@@ -52,6 +55,7 @@ func _on_ok_pressed():
 	# Paranoia
 	multiplayer.get_multiplayer_peer().close()
 	
+	var color = _get_color()
 	var port = _get_port()
 	var max_players = _get_max_players()
 	var ip_address = _get_ip_addr()
@@ -62,12 +66,14 @@ func _on_ok_pressed():
 	
 	data = {
 		'name': maybe_player_name,
+		'color': color,
 		'port': port,
 		'max_players': max_players,
 		'ip_address': ip_address,
 	}
 	
 	_persist_defaults()
+	
 	var peer = ENetMultiplayerPeer.new()
 	peer.set_bind_ip(ip_address)
 	
@@ -94,6 +100,10 @@ func _get_player_name():
 		return null
 	
 	return name
+
+
+func _get_color():
+	return color_edit.get_pick_color()
 
 
 func _get_port():
@@ -153,7 +163,8 @@ func _get_ip_addr():
 
 func _go_to_lobby():
 	var player_id := multiplayer.get_unique_id()
-	var player := Player.new(player_id, data['name'])
+	
+	var player := Player.new(player_id, data['name'], data['color'])
 	multiplayer_data.self_player = player
 	
 	get_tree().change_scene_to_file(lobby_scene_path)

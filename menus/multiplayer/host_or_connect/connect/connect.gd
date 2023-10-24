@@ -5,11 +5,10 @@ extends Control
 
 var data = {}
 
-@onready var lobby_scene := load(lobby_scene_path)
-
 @onready var message_label = $ScrollContainer/CenterContainer/VBoxContainer/MessageLabel as Label
 
 @onready var name_edit := $ScrollContainer/CenterContainer/VBoxContainer/NameEdit as LineEdit
+@onready var color_edit := $ScrollContainer/CenterContainer/VBoxContainer/ColorSelector as ColorSelector
 @onready var addr_edit := $ScrollContainer/CenterContainer/VBoxContainer/AddrEdit as LineEdit
 @onready var port_edit := $ScrollContainer/CenterContainer/VBoxContainer/PortEdit as LineEdit
 
@@ -24,11 +23,14 @@ func _load_defaults():
 	config.load()
 	
 	var default_name = config.get_default_multiplayer_name()
+	var default_color = config.get_default_multiplayer_color()
 	var default_addr = config.get_default_multiplayer_connect_addr()
 	var default_port = config.get_default_multiplayer_connect_port()
 	
 	if default_name != null:
 		name_edit.set_text(default_name)
+	if default_color != null:
+		color_edit.set_pick_color(default_color)
 	if default_addr != null:
 		addr_edit.set_text(default_addr)
 	if default_port != null:
@@ -37,6 +39,7 @@ func _load_defaults():
 
 func _persist_defaults():
 	config.set_default_multiplayer_name(data['name'])
+	config.set_default_multiplayer_color(data['color'])
 	config.set_default_multiplayer_connect_addr(data['address'])
 	config.set_default_multiplayer_connect_port(data['port'])
 	config.persist()
@@ -48,7 +51,7 @@ func _on_ok_pressed():
 	# Close any possible hanging attempted connections
 	multiplayer.get_multiplayer_peer().close()
 	
-	# All sanitization should go here
+	var color = _get_color()
 	var address = _get_addr()
 	var port = _get_port()
 	var maybe_player_name = _get_player_name()
@@ -58,11 +61,13 @@ func _on_ok_pressed():
 	
 	data = {
 		'name': maybe_player_name,
+		'color': color,
 		'address': address,
 		'port': port,
 	}
 	
 	_persist_defaults()
+	
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_client(address, port)
 	
@@ -83,6 +88,10 @@ func _get_player_name():
 		return null
 	
 	return name
+
+
+func _get_color():
+	return color_edit.get_pick_color()
 
 
 func _get_addr():
@@ -120,14 +129,15 @@ func _get_port():
 
 
 func _go_to_lobby():
+	var player_id := multiplayer.get_unique_id()
+	
+	var player := Player.new(player_id, data['name'], data['color'])
+	multiplayer_data.self_player = player
+	
 	get_tree().change_scene_to_file(lobby_scene_path)
 
 
 func _on_connected():
-	var player_id := multiplayer.get_unique_id()
-	var player := Player.new(player_id, data['name'])
-	multiplayer_data.self_player = player
-	
 	_go_to_lobby()
 
 

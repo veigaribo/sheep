@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://brgccxw0jm4dm"]
+[gd_scene load_steps=5 format=3 uid="uid://brgccxw0jm4dm"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_27ufc"]
 [ext_resource type="Script" path="res://menus/multiplayer/lobby/lobby.gd" id="1_cs560"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_r1ybc"]
+[ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_iwvf6"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -14,11 +15,11 @@ grow_vertical = 2
 script = ExtResource("1_cs560")
 previous_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 main_scene_path = "res://main/main.tscn"
-player_name_scene_path = "res://menus/multiplayer/lobby/player_name.tscn"
+player_entry_scene_path = "res://menus/multiplayer/lobby/player_entry.tscn"
 
 [node name="PlayerLabelMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://menus/multiplayer/lobby/player_name.tscn")
-spawn_path = NodePath("../CenterContainer/VBoxContainer/PlayerNames")
+_spawnable_scenes = PackedStringArray("res://menus/multiplayer/lobby/player_entry.tscn")
+spawn_path = NodePath("../CenterContainer/VBoxContainer/PlayerEntries")
 
 [node name="Christian" type="Sprite2D" parent="."]
 modulate = Color(0.396078, 0.396078, 0.396078, 1)
@@ -34,7 +35,10 @@ offset_bottom = 191.0
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 
-[node name="PlayerNames" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="ColorSelector" parent="CenterContainer/VBoxContainer" instance=ExtResource("3_iwvf6")]
+layout_mode = 2
+
+[node name="PlayerEntries" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="Cockpit" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
@@ -49,5 +53,7 @@ layout_mode = 2
 text = "Return"
 script = null
 
+[connection signal="color_changed" from="CenterContainer/VBoxContainer/ColorSelector" to="." method="_on_color_selector_color_changed"]
+[connection signal="color_changed_debounced" from="CenterContainer/VBoxContainer/ColorSelector" to="." method="_on_color_selector_color_changed_debounced"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Cockpit/Ok" to="." method="_on_ok_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Cockpit/ReturnButton" to="." method="_on_return_button_pressed"]

@@ -46,7 +46,7 @@ func _spawn_sheep(id: int):
 	sheep.set_name("Sheep" + str(id))
 	sheep.position = sampler_result.position
 	
-	add_sibling(sheep)
+	add_sibling(sheep, true)
 	sheep.move_and_slide()
 	
 	if sheep.is_on_wall():
