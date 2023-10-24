@@ -12,24 +12,20 @@ var server_shepherds := {}
 var shepherd_scene: Resource
 
 @onready var _timer := $Timer as CountdownTimer
-@onready var _player_names := $HUD/PlayerNames as Label
 @onready var _tree := get_tree()
 
 
 func _ready() -> void:
-	print('multiplayer ', multiplayer)
-	print('peer ', multiplayer.get_multiplayer_peer())
-	
 	if multiplayer_data.is_multiplayer:
-		# Multiplayer
 		if multiplayer.is_server():
-			_server_display_player_names()
+			multiplayer_data.server_change_player_state(1, Player.States.PLAYING)
 	else:
-		# Singleplayer
 		_server_create_shepherd(Player.new(1, "", Color.WHITE))
 	
 	if multiplayer.is_server():
 		_server_create_shepherds()
+	else:
+		rpc_id(1, "server_player_entered")
 	
 	multiplayer.server_disconnected.connect(client_disconnected)
 	multiplayer_data.server_player_quit.connect(server_player_disconnected)
@@ -58,17 +54,7 @@ func _server_create_shepherds():
 func _server_remove_shepherd(id: int):
 	if id in server_shepherds:
 		server_shepherds[id].queue_free()
-
-
-func _server_display_player_names():
-	var players := multiplayer_data.server_get_players()
-	var player_names := players.pop_front().name as String
-	
-	for player in players:
-		player_names += ", "
-		player_names += player.name
-	
-	_player_names.set_text(player_names)
+		server_shepherds.erase(id)
 
 
 func _get_shepherd_scene() -> Resource:
@@ -93,7 +79,7 @@ func server_player_disconnected(player: Player):
 	_server_remove_shepherd(player.multiplayer_id)
 
 
-# This client is returning to lobby
+# This client / server is returning to lobby
 func _on_esc_handler_returning_to_lobby():
 	returning_to_lobby.emit()
 	queue_free()
@@ -103,3 +89,10 @@ func _on_esc_handler_returning_to_lobby():
 func _server_on_esc_handler_someone_returning_to_lobby(id):
 	if multiplayer.is_server():
 		_server_remove_shepherd(id)
+		multiplayer_data.server_change_player_state(id, Player.States.IN_LOBBY)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func server_player_entered():
+	var id = multiplayer.get_remote_sender_id()
+	multiplayer_data.server_change_player_state(id, Player.States.PLAYING)

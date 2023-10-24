@@ -57,6 +57,11 @@ func server_recolor_player(id: int, color: Color):
 	server_player_updated.emit(server_players[id])
 
 
+func server_change_player_state(id: int, state: Player.States):
+	server_players[id].state = state
+	server_player_updated.emit(server_players[id])
+
+
 func server_get_players() -> Array:
 	return server_players.values()
 

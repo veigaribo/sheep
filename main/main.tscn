@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0von5qosiwce"]
+[gd_scene load_steps=18 format=3 uid="uid://d0von5qosiwce"]
 
 [ext_resource type="PackedScene" uid="uid://7n6tlswyxt83" path="res://main/floor/floor.tscn" id="1_bgaf8"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://main/countdown_label.gd" id="8_kq1cb"]
 [ext_resource type="Script" path="res://main/display_time.gd" id="8_ptatx"]
 [ext_resource type="AudioStream" uid="uid://d184xln1mleom" path="res://main/audio/streets_of_scholars.wav" id="12_2pwcm"]
+[ext_resource type="PackedScene" uid="uid://ct66vggqdoc30" path="res://menus/multiplayer/lobby/player_entries.tscn" id="12_l2ixg"]
 [ext_resource type="Script" path="res://main/esc_handler.gd" id="13_hwrso"]
 [ext_resource type="Script" path="res://main/countdown_sound_player.gd" id="14_5l3r1"]
 [ext_resource type="AudioStream" uid="uid://iatvh2oph2y0" path="res://main/audio/wood_hit_3.wav" id="14_ylywf"]
@@ -21,10 +22,6 @@ properties/0/path = NodePath("HUD/Time/Display:text")
 properties/0/spawn = true
 properties/0/sync = false
 properties/0/watch = true
-properties/1/path = NodePath("HUD/PlayerNames:text")
-properties/1/spawn = true
-properties/1/sync = true
-properties/1/watch = false
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
@@ -141,11 +138,19 @@ offset_bottom = 23.0
 text = "00:00.000"
 script = ExtResource("8_ptatx")
 
-[node name="PlayerNames" type="Label" parent="HUD"]
-layout_mode = 0
-offset_top = 184.0
-offset_right = 40.0
+[node name="PlayerEntriesWrapper" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_right = 160.0
 offset_bottom = 192.0
+
+[node name="PlayerEntries" parent="HUD/PlayerEntriesWrapper" instance=ExtResource("12_l2ixg")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -11.0
+offset_right = 80.0
+grow_vertical = 0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_2pwcm")

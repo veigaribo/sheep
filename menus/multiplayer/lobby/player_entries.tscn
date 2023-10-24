@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct66vggqdoc30"]
+
+[ext_resource type="Script" path="res://menus/multiplayer/lobby/player_entries.gd" id="1_y47pm"]
+
+[node name="PlayerEntries" type="VBoxContainer"]
+size_flags_horizontal = 0
+script = ExtResource("1_y47pm")
+player_entry_scene_path = "res://menus/multiplayer/lobby/player_entry.tscn"
+
+[node name="PlayerLabelMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://menus/multiplayer/lobby/player_entry.tscn")
+spawn_path = NodePath("..")

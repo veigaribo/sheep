@@ -4,15 +4,11 @@ extends Control
 
 @export_file var previous_scene_path: String
 @export_file var main_scene_path: String
-@export_file var player_entry_scene_path: String
 
-@onready var player_entry_scene := load(player_entry_scene_path)
-@onready var player_entries := $CenterContainer/VBoxContainer/PlayerEntries
+# @onready var player_entries := $CenterContainer/VBoxContainer/PlayerEntries
 @onready var ok_button := $CenterContainer/VBoxContainer/Cockpit/Ok as Button
 @onready var color_selector := $CenterContainer/VBoxContainer/ColorSelector as ColorSelector
 
-
-# This class (and ONLY this class) manages multiplayer_data
 
 func _ready():
 	multiplayer_data.is_multiplayer = true
@@ -27,12 +23,6 @@ func _ready():
 		multiplayer_data.server_clear_players()
 		multiplayer_data.server_insert_player(self_player)
 		
-		var player_entry_label := player_entry_scene.instantiate() as LobbyPlayerEntry
-		player_entry_label.set_name("PlayerName" + str(self_player.multiplayer_id))
-		player_entry_label.set_player_id(self_player.multiplayer_id)
-		
-		player_entries.add_child(player_entry_label)
-		
 		multiplayer.peer_connected.connect(server_register_unnamed_player)
 		multiplayer.peer_disconnected.connect(server_unregister_player)
 	else:
@@ -44,12 +34,6 @@ func _ready():
 
 func server_register_unnamed_player(id: int):
 	multiplayer_data.server_insert_player(Player.new(id, "Loading...", Color.WHITE))
-	
-	var player_entry_label := player_entry_scene.instantiate() as LobbyPlayerEntry
-	player_entry_label.set_name("PlayerName" + str(id))
-	player_entry_label.set_player_id(id)
-	
-	player_entries.add_child(player_entry_label)
 
 
 func server_unregister_player(id: int):
@@ -71,6 +55,7 @@ func _on_return_button_pressed():
 	var peer = multiplayer.get_multiplayer_peer()
 	
 	if multiplayer.is_server():
+		multiplayer_data.server_clear_players()
 		_go_to_previous()
 		peer.close()
 	else:
@@ -98,7 +83,20 @@ func _on_ok_pressed():
 		rpc("go_to_main")
 
 
+@rpc("any_peer", "call_remote", "reliable")
+func server_player_returned_to_lobby():
+	var id := multiplayer.get_remote_sender_id()
+	multiplayer_data.server_change_player_state(id, Player.States.IN_LOBBY)
+
+
 func _on_returning_to_lobby():
+	if not multiplayer.is_server():
+		rpc_id(1, "server_player_returned_to_lobby")
+	else:
+		for player in multiplayer_data.server_get_players():
+			var id = player.multiplayer_id
+			multiplayer_data.server_change_player_state(id, Player.States.IN_LOBBY)
+	
 	set_visible(true)
 
 
