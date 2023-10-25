@@ -56,4 +56,13 @@ layout_mode = 2
 text = "Quit"
 script = ExtResource("7_frk4o")
 
+[node name="Version" type="Button" parent="."]
+layout_mode = 0
+offset_top = 176.0
+offset_right = 16.0
+offset_bottom = 192.0
+text = "v0.0.0 [abcdefghij]"
+flat = true
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="CenterContainer/VBoxContainer/VBoxContainer/Quit" method="_on_pressed"]
+[connection signal="pressed" from="Version" to="." method="_on_version_pressed"]
