@@ -279,6 +279,8 @@ max_wander_time_s = 6
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_e64oc")
+volume_db = 10.0
+attenuation = 8.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7vur3")
