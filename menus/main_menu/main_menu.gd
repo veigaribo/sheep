@@ -1,6 +1,8 @@
 extends Control
 
 
+@export var version_data: JSON
+
 @onready var _version_button := $Version as Button
 
 
@@ -15,11 +17,8 @@ func _ready():
 
 
 func _load_version():
-	var file = ConfigFile.new()
-	file.load("res://version.cfg")
-	
-	var version = file.get_value("game", "version")
-	var commit = file.get_value("game", "commit")
+	var version = version_data.data.version
+	var commit = version_data.data.commit
 	
 	_version_button.set_text(version + " [" + commit.substr(0, 10) + "]")
 
