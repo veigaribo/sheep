@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://ceeb8muohhas5"]
+[gd_scene load_steps=9 format=3 uid="uid://ceeb8muohhas5"]
 
 [ext_resource type="Script" path="res://menus/multiplayer/host_or_connect/connect/connect.gd" id="1_5bvv7"]
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_6c53e"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_nryll"]
 [ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_j2wwp"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_0gwqy"]
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_kr5cr"]
+events = [SubResource("InputEventKey_0gwqy")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ewych"]
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_ub4ak"]
+events = [SubResource("InputEventKey_ewych")]
 
 [node name="Connect" type="Control"]
 layout_mode = 3
@@ -76,10 +88,12 @@ max_length = 5
 
 [node name="Ok" type="Button" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+shortcut = SubResource("Shortcut_kr5cr")
 text = "Ok"
 
 [node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" instance=ExtResource("2_nryll")]
 layout_mode = 2
+shortcut = SubResource("Shortcut_ub4ak")
 text = "Return"
 next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 

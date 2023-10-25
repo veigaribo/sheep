@@ -1,10 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf3q6hagdskvo"]
+[gd_scene load_steps=10 format=3 uid="uid://cf3q6hagdskvo"]
 
 [ext_resource type="Script" path="res://menus/multiplayer/host_or_connect/host/host.gd" id="1_erbci"]
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_h5n4o"]
 [ext_resource type="Script" path="res://menus/multiplayer/host_or_connect/host/advanced_toggle.gd" id="2_wpg21"]
 [ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_4wvdq"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="3_k12pw"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_rbfqo"]
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_w0s7g"]
+events = [SubResource("InputEventKey_rbfqo")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_uuppc"]
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_btfm3"]
+events = [SubResource("InputEventKey_uuppc")]
 
 [node name="Host" type="Control"]
 layout_mode = 3
@@ -99,10 +111,12 @@ max_length = 15
 
 [node name="Ok" type="Button" parent="ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+shortcut = SubResource("Shortcut_w0s7g")
 text = "Ok"
 
 [node name="ReturnButton" parent="ScrollContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_k12pw")]
 layout_mode = 2
+shortcut = SubResource("Shortcut_btfm3")
 text = "Return"
 next_scene_path = "res://menus/multiplayer/host_or_connect/host_or_connect.tscn"
 

@@ -1,10 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://brgccxw0jm4dm"]
+[gd_scene load_steps=10 format=3 uid="uid://brgccxw0jm4dm"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_27ufc"]
 [ext_resource type="Script" path="res://menus/multiplayer/lobby/lobby.gd" id="1_cs560"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_r1ybc"]
 [ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_iwvf6"]
 [ext_resource type="PackedScene" uid="uid://ct66vggqdoc30" path="res://menus/multiplayer/lobby/player_entries.tscn" id="4_jslqw"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_saqb5"]
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_q2qoj"]
+events = [SubResource("InputEventKey_saqb5")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_eqt6g"]
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_fedri"]
+events = [SubResource("InputEventKey_eqt6g")]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -41,11 +53,15 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Ok" type="Button" parent="CenterContainer/VBoxContainer/Cockpit"]
+visible = false
 layout_mode = 2
+disabled = true
+shortcut = SubResource("Shortcut_q2qoj")
 text = "Start"
 
 [node name="ReturnButton" parent="CenterContainer/VBoxContainer/Cockpit" instance=ExtResource("2_r1ybc")]
 layout_mode = 2
+shortcut = SubResource("Shortcut_fedri")
 text = "Return"
 script = null
 

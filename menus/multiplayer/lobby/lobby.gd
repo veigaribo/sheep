@@ -7,6 +7,7 @@ extends Control
 
 # @onready var player_entries := $CenterContainer/VBoxContainer/PlayerEntries
 @onready var ok_button := $CenterContainer/VBoxContainer/Cockpit/Ok as Button
+@onready var return_button := $CenterContainer/VBoxContainer/Cockpit/ReturnButton as Button
 @onready var color_selector := $CenterContainer/VBoxContainer/ColorSelector as ColorSelector
 
 
@@ -20,15 +21,15 @@ func _ready():
 	push_warning("player ", self_player.multiplayer_id, ": ", self_player.name)
 	
 	if multiplayer.is_server():
+		_toggle_buttons(true)
+		
 		multiplayer_data.server_clear_players()
 		multiplayer_data.server_insert_player(self_player)
 		
 		multiplayer.peer_connected.connect(server_register_unnamed_player)
 		multiplayer.peer_disconnected.connect(server_unregister_player)
 	else:
-		ok_button.set_visible(false)
 		rpc_id(1, "server_update_player", self_player.name, self_player.color)
-		
 		multiplayer.server_disconnected.connect(client_disconnected)
 
 
@@ -67,9 +68,20 @@ func _go_to_previous():
 	get_tree().change_scene_to_file(previous_scene_path)
 
 
+func _hide():
+	set_visible(false)
+	_toggle_buttons(false)
+
+
+func _show():
+	set_visible(true)
+	# If not deferred, could trigger immediately
+	_toggle_buttons.call_deferred(true)
+
+
 @rpc("authority", "call_local", "reliable")
 func go_to_main():
-	set_visible(false)
+	_hide()
 	
 	var main_scene := load(main_scene_path)
 	var main := main_scene.instantiate() as Main
@@ -89,6 +101,14 @@ func server_player_returned_to_lobby():
 	multiplayer_data.server_change_player_state(id, Player.States.IN_LOBBY)
 
 
+func _toggle_buttons(enable: bool):
+	if multiplayer.is_server():
+		ok_button.set_visible(enable)
+		ok_button.set_disabled(not enable)
+	
+	return_button.set_disabled(not enable)
+
+
 func _on_returning_to_lobby():
 	if not multiplayer.is_server():
 		rpc_id(1, "server_player_returned_to_lobby")
@@ -97,7 +117,7 @@ func _on_returning_to_lobby():
 			var id = player.multiplayer_id
 			multiplayer_data.server_change_player_state(id, Player.States.IN_LOBBY)
 	
-	set_visible(true)
+	_show()
 
 
 func _on_color_selector_color_changed(color):
