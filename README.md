@@ -23,6 +23,6 @@ The font used throughout the game is the one from TempleOS, designed by Terry Da
 
 The image used as a background in the menus is [this one](https://wallpapers.com/wallpapers/christian-cross-against-sunset-402q1qodf9r8y8zj.html) from wekciodv.
 
-Finally, this wouldn't be possible if it weren't for the [Godot game engine](https://godotengine.org/).
+Finally, this wouldn't be possible if it weren't for the [Redot game engine](https://redotengine.org/) and its ancestor [Godot](https://godotengine.org/).
 
 ❤
