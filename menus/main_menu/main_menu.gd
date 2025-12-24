@@ -4,9 +4,13 @@ extends Control
 @export var version_data: JSON
 
 @onready var _version_button := $Version as Button
+@onready var _multiplayer_button := $CenterContainer/VBoxContainer/VBoxContainer/MultiplayerButton as Button
 
 
 func _ready():
+	if OS.get_name() == "Web":
+		_multiplayer_button.disabled = true
+	
 	# Ensure we're clean
 	multiplayer.get_multiplayer_peer().close() # Paranoia
 	multiplayer.set_multiplayer_peer(OfflineMultiplayerPeer.new())
