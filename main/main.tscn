@@ -148,8 +148,10 @@ script = ExtResource("8_ptatx")
 
 [node name="PlayerEntriesWrapper" type="Control" parent="HUD"]
 anchors_preset = 0
-offset_right = 160.0
-offset_bottom = 192.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 176.0
+offset_bottom = 208.0
 
 [node name="PlayerEntries" parent="HUD/PlayerEntriesWrapper" instance=ExtResource("12_l2ixg")]
 layout_mode = 1
