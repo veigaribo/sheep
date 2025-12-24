@@ -41,6 +41,7 @@ func _server_create_shepherd(player: Player):
 	var shepherd := _get_shepherd_scene().instantiate() as Shepherd
 	shepherd.server_set_player(player)
 	shepherd.set_name("Shepherd" + str(player.multiplayer_id))
+	shepherd.visible = false
 	
 	server_shepherds[player.multiplayer_id] = shepherd
 	add_child(shepherd, true)
@@ -66,6 +67,9 @@ func _get_shepherd_scene() -> Resource:
 
 @rpc("authority", "call_local", "reliable")
 func do_kickoff():
+	for shepherd in server_shepherds:
+		server_shepherds[shepherd].visible = true
+	
 	_tree.paused = false
 	kickoff.emit()
 
