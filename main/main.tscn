@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://main/countdown_label.gd" id="8_kq1cb"]
 [ext_resource type="Script" path="res://main/display_time.gd" id="8_ptatx"]
 [ext_resource type="AudioStream" uid="uid://d184xln1mleom" path="res://main/audio/streets_of_scholars.wav" id="12_2pwcm"]
-[ext_resource type="PackedScene" uid="uid://ct66vggqdoc30" path="res://menus/multiplayer/lobby/player_entries.tscn" id="12_l2ixg"]
+[ext_resource type="PackedScene" uid="uid://dbhlrfaxpqmfu" path="res://menus/multiplayer/lobby/player_entries.tscn" id="12_l2ixg"]
 [ext_resource type="Script" path="res://main/esc_handler.gd" id="13_hwrso"]
 [ext_resource type="Script" path="res://main/countdown_sound_player.gd" id="14_5l3r1"]
 [ext_resource type="AudioStream" uid="uid://iatvh2oph2y0" path="res://main/audio/wood_hit_3.wav" id="14_ylywf"]
@@ -20,8 +20,7 @@
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7kos"]
 properties/0/path = NodePath("HUD/Time/Display:text")
 properties/0/spawn = true
-properties/0/sync = false
-properties/0/watch = true
+properties/0/replication_mode = 2
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
@@ -46,6 +45,7 @@ y_sort_enabled = true
 
 [node name="Corral" parent="." instance=ExtResource("3_k1nb5")]
 y_sort_enabled = true
+position = Vector2(24, 24)
 sheep_to_win = 12
 
 [node name="Sheep Spawner" type="Node" parent="."]
@@ -53,21 +53,24 @@ script = ExtResource("5_06kpe")
 sheep_count = 12
 
 [node name="PointSampler" parent="Sheep Spawner" instance=ExtResource("6_fcg3p")]
-polygons_vertices = [PackedVector2Array(8, 16, 87, 16, 87, 54, 8, 54), PackedVector2Array(4, 64, 188, 64, 4, 152), PackedVector2Array(97, 4, 290, 4, 187, 63, 97, 63), PackedVector2Array(109, 102, 174, 71, 249, 68, 187, 102), PackedVector2Array(77, 162, 320, 29, 320, 162), PackedVector2Array(4, 162, 319, 162, 319, 190, 4, 190), PackedVector2Array(56, 55, 72, 55, 72, 64, 56, 64), PackedVector2Array(74, 119, 109, 102, 109, 119)]
+position = Vector2(16, 16)
+polygons_vertices = [PackedVector2Array(16, 24, 96, 24, 96, 58, 16, 58), PackedVector2Array(4, 70, 176, 70, 4, 152), PackedVector2Array(105, 4, 290, 4, 187, 70, 105, 70), PackedVector2Array(109, 102, 174, 71, 249, 68, 187, 102), PackedVector2Array(77, 162, 318, 29, 318, 162), PackedVector2Array(4, 162, 318, 162, 318, 190, 4, 190), PackedVector2Array(64, 58, 80, 58, 80, 70, 64, 70), PackedVector2Array(74, 119, 109, 102, 109, 119)]
 biases = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 [node name="PositionHelper" type="Node2D" parent="Sheep Spawner/PointSampler"]
 process_mode = 4
 editor_description = "If you want to configure the sampler, move this to check the coordinates."
-position = Vector2(109, 102)
+position = Vector2(125, 118)
 
 [node name="Win" type="Control" parent="."]
 visible = false
 top_level = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 56.0
 theme = ExtResource("5_7qn0t")
 script = ExtResource("5_17i2n")
 
@@ -91,9 +94,10 @@ theme = ExtResource("5_7qn0t")
 [node name="Countdown" type="Label" parent="HUD"]
 process_mode = 2
 layout_mode = 0
-offset_left = 1.0
-offset_right = 330.0
-offset_bottom = 180.0
+offset_left = 19.0
+offset_top = 19.0
+offset_right = 334.0
+offset_bottom = 207.0
 text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -108,6 +112,7 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 125.0
 offset_bottom = 26.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Sheep corralled:"
 
 [node name="Count" type="Label" parent="HUD/Sheep Coralled"]
@@ -115,12 +120,13 @@ layout_mode = 0
 offset_left = 128.0
 offset_right = 168.0
 offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 script = ExtResource("7_bxodf")
 
 [node name="Time" type="Control" parent="HUD"]
 anchors_preset = 0
-offset_left = 208.0
-offset_right = 248.0
+offset_left = 240.0
+offset_right = 280.0
 offset_bottom = 40.0
 metadata/_edit_group_ = true
 
@@ -128,6 +134,7 @@ metadata/_edit_group_ = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Time:"
 
 [node name="Display" type="Label" parent="HUD/Time"]
@@ -135,6 +142,7 @@ layout_mode = 0
 offset_left = 40.0
 offset_right = 80.0
 offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "00:00.000"
 script = ExtResource("8_ptatx")
 

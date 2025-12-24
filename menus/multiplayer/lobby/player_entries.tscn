@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct66vggqdoc30"]
+[gd_scene load_steps=2 format=3 uid="uid://dbhlrfaxpqmfu"]
 
 [ext_resource type="Script" path="res://menus/multiplayer/lobby/player_entries.gd" id="1_y47pm"]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://menus/multiplayer/host_or_connect/connect/connect.gd" id="1_5bvv7"]
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_6c53e"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_nryll"]
-[ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_j2wwp"]
+[ext_resource type="PackedScene" uid="uid://d2iu6ovs4sakc" path="res://menus/multiplayer/color_selector.tscn" id="3_j2wwp"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_0gwqy"]
 keycode = 4194309
@@ -29,14 +29,14 @@ lobby_scene_path = "res://menus/multiplayer/lobby/lobby.tscn"
 
 [node name="Christian" type="Sprite2D" parent="."]
 modulate = Color(0.396078, 0.396078, 0.396078, 1)
-position = Vector2(160, 96)
-scale = Vector2(0.166667, 0.16)
+position = Vector2(176, 120)
+scale = Vector2(0.183334, 0.2)
 texture = ExtResource("1_6c53e")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 192.0
+offset_right = 352.0
+offset_bottom = 240.0
 
 [node name="CenterContainer" type="CenterContainer" parent="ScrollContainer"]
 layout_mode = 2

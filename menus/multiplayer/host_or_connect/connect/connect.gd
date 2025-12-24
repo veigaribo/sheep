@@ -166,4 +166,5 @@ func _display_message(message: String):
 
 func _on_return_pressed():
 	# Close any possible hanging attempted connections
-	multiplayer.get_multiplayer_peer().close()
+	if multiplayer != null:
+		multiplayer.get_multiplayer_peer().close()

@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_27ufc"]
 [ext_resource type="Script" path="res://menus/multiplayer/lobby/lobby.gd" id="1_cs560"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_r1ybc"]
-[ext_resource type="PackedScene" uid="uid://cu28gdxiit507" path="res://menus/multiplayer/color_selector.tscn" id="3_iwvf6"]
-[ext_resource type="PackedScene" uid="uid://ct66vggqdoc30" path="res://menus/multiplayer/lobby/player_entries.tscn" id="4_jslqw"]
+[ext_resource type="PackedScene" uid="uid://d2iu6ovs4sakc" path="res://menus/multiplayer/color_selector.tscn" id="3_iwvf6"]
+[ext_resource type="PackedScene" uid="uid://dbhlrfaxpqmfu" path="res://menus/multiplayer/lobby/player_entries.tscn" id="4_jslqw"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_saqb5"]
 keycode = 4194309
@@ -31,14 +31,14 @@ main_scene_path = "res://main/main.tscn"
 
 [node name="Christian" type="Sprite2D" parent="."]
 modulate = Color(0.396078, 0.396078, 0.396078, 1)
-position = Vector2(160, 96)
-scale = Vector2(0.166667, 0.16)
+position = Vector2(176, 120)
+scale = Vector2(0.183334, 0.2)
 texture = ExtResource("1_27ufc")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 191.0
+offset_right = 352.0
+offset_bottom = 240.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
