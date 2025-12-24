@@ -92,7 +92,7 @@ func _server_physics_herd(delta: float) -> void:
 	else:
 		direction = Vector2.ZERO
 	
-	_server_move_in_direction(direction, delta)
+	server_move_in_direction(direction, delta)
 
 
 func server_herd(shepherd: Shepherd) -> void:
@@ -136,7 +136,7 @@ func _server_stop() -> void:
 	_server_to_state(State.IDLE)
 
 
-func _server_move_in_direction(direction: Vector2, delta: float) -> bool:
+func server_move_in_direction(direction: Vector2, delta: float) -> bool:
 	rpc("animation_set_facing", direction)
 	
 	var target_velocity := direction * speed
@@ -147,7 +147,22 @@ func _server_move_in_direction(direction: Vector2, delta: float) -> bool:
 		delta_acceleration
 	)
 	
-	return move_and_slide()
+	var result := move_and_slide()
+	
+	# Push other sheep along
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider is Sheep:
+			var normal = collision.get_normal()
+			var dot = direction.dot(normal)
+			
+			# Push in a single direction only
+			if dot < 0:
+				collider.server_move_in_direction(normal * -1, delta)
+	
+	return result
 
 
 func _server_move_to(target_position: Vector2, delta: float) -> bool:
@@ -155,7 +170,7 @@ func _server_move_to(target_position: Vector2, delta: float) -> bool:
 		target_position
 	)
 	
-	return _server_move_in_direction(direction, delta)
+	return server_move_in_direction(direction, delta)
 
 
 @rpc("authority", "call_local", "unreliable")
