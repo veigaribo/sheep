@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq4omanqn3ps"]
+[gd_scene load_steps=5 format=3 uid="uid://bq4omanqn3ps"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="2_mitwo"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="3_1nsa7"]
-[ext_resource type="Texture2D" uid="uid://15apcdbchklb" path="res://icon.svg" id="3_j0bom"]
+[ext_resource type="Texture2D" uid="uid://15apcdbchklb" path="res://godot.svg" id="3_j0bom"]
+[ext_resource type="Texture2D" uid="uid://btrgdn8cmtol6" path="res://redot.svg" id="3_s0uhk"]
 
 [node name="Credits" type="Control"]
 layout_mode = 3
@@ -77,10 +78,15 @@ text = "This font"
 layout_mode = 2
 text = "  Terry A. Davis, Gaven Rendell"
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(326, 27)
+[node name="GodotIcon" type="Sprite2D" parent="."]
+position = Vector2(326, 61)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_j0bom")
+
+[node name="RedotIcon" type="Sprite2D" parent="."]
+position = Vector2(326, 27)
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("3_s0uhk")
 
 [node name="Back" parent="." instance=ExtResource("3_1nsa7")]
 layout_mode = 0
