@@ -4,6 +4,10 @@ extends Area2D
 
 var server_player: Player
 
+# For the replay
+var history: Array
+var player_name: String
+
 var _herd_count: int = 0
 
 @onready var _sprite := $Sprite as Sprite2D
@@ -23,6 +27,10 @@ func _ready() -> void:
 		modulate(server_player.color)
 
 
+func _physics_process(delta: float) -> void:
+	history.push_back(self.transform)
+
+
 func _process(_delta: float) -> void:
 	var mouse_pos := get_viewport().get_mouse_position()
 	
@@ -35,6 +43,7 @@ func _process(_delta: float) -> void:
 
 func server_set_player(player: Player):
 	server_player = player
+	player_name = player.name
 	
 	if is_inside_tree():
 		modulate(player.color)

@@ -1,6 +1,7 @@
 class_name SheepSpawner
 extends Node
 
+signal spawned(sheep: Sheep)
 
 @export var root_node: NodePath
 @export var sheep_count: int = 10
@@ -41,7 +42,7 @@ func _setup_sampler():
 
 func _spawn_sheep(id: int):
 	var sheep := _sheep_scene.instantiate() as Sheep
-	var sampler_result := _sampler.random_point()
+	var sampler_result := _sampler.random_point(rng.rand)
 	
 	sheep.set_name("Sheep" + str(id))
 	sheep.position = sampler_result.position
@@ -54,6 +55,7 @@ func _spawn_sheep(id: int):
 		_spawn_sheep(id)
 	else:
 		_sheep_constrainer.update(sampler_result.polygon)
+		spawned.emit(sheep)
 
 
 class SheepSpawnerConstrainer:

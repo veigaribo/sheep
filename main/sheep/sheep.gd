@@ -15,6 +15,9 @@ var _state := State.IDLE
 
 var herding_shepherds: Array
 
+# For the replay
+var history: Array
+
 @onready var _wanderer := $Wanderer as Wanderer
 @onready var _wandering_to := global_position
 @onready var _animation_tree := $AnimationTree as AnimationTree
@@ -29,6 +32,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	history.push_back(self.transform)
+	
 	if not multiplayer.is_server():
 		return
 	

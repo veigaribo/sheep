@@ -53,6 +53,10 @@ layout_mode = 2
 text = "Credits"
 next_scene_path = "res://menus/credits/credits.tscn"
 
+[node name="ReplaysButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Replays"
+
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"

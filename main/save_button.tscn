@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://corhxyd73renr"]
+
+[ext_resource type="Script" path="res://main/save_button.gd" id="1_fjrx0"]
+
+[node name="SaveButton" type="Button"]
+text = "Save"
+script = ExtResource("1_fjrx0")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

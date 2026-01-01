@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0von5qosiwce"]
+[gd_scene load_steps=19 format=3 uid="uid://d0von5qosiwce"]
 
 [ext_resource type="PackedScene" uid="uid://7n6tlswyxt83" path="res://main/floor/floor.tscn" id="1_bgaf8"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://main/display_time.gd" id="8_ptatx"]
 [ext_resource type="AudioStream" uid="uid://d184xln1mleom" path="res://main/audio/streets_of_scholars.wav" id="12_2pwcm"]
 [ext_resource type="PackedScene" uid="uid://dbhlrfaxpqmfu" path="res://menus/multiplayer/lobby/player_entries.tscn" id="12_l2ixg"]
+[ext_resource type="Script" path="res://main/save_buttons.gd" id="13_ejbhc"]
 [ext_resource type="Script" path="res://main/esc_handler.gd" id="13_hwrso"]
 [ext_resource type="Script" path="res://main/countdown_sound_player.gd" id="14_5l3r1"]
 [ext_resource type="AudioStream" uid="uid://iatvh2oph2y0" path="res://main/audio/wood_hit_3.wav" id="14_ylywf"]
@@ -46,7 +47,7 @@ y_sort_enabled = true
 [node name="Corral" parent="." instance=ExtResource("3_k1nb5")]
 y_sort_enabled = true
 position = Vector2(24, 24)
-sheep_to_win = 12
+sheep_to_win = 3
 
 [node name="Sheep Spawner" type="Node" parent="."]
 script = ExtResource("5_06kpe")
@@ -54,7 +55,7 @@ sheep_count = 12
 
 [node name="PointSampler" parent="Sheep Spawner" instance=ExtResource("6_fcg3p")]
 position = Vector2(16, 16)
-polygons_vertices = [PackedVector2Array(16, 24, 96, 24, 96, 58, 16, 58), PackedVector2Array(4, 70, 176, 70, 4, 152), PackedVector2Array(105, 4, 290, 4, 187, 70, 105, 70), PackedVector2Array(109, 102, 174, 71, 249, 68, 187, 102), PackedVector2Array(77, 162, 318, 29, 318, 162), PackedVector2Array(4, 162, 318, 162, 318, 190, 4, 190), PackedVector2Array(64, 58, 80, 58, 80, 70, 64, 70), PackedVector2Array(74, 119, 109, 102, 109, 119)]
+polygons_vertices = [PackedVector2Array(16, 24, 96, 24, 96, 58, 16, 58), PackedVector2Array(4, 72, 176, 70, 4, 152), PackedVector2Array(106, 4, 290, 4, 187, 70, 105, 70), PackedVector2Array(109, 102, 174, 71, 249, 68, 187, 102), PackedVector2Array(77, 162, 318, 29, 318, 162), PackedVector2Array(4, 162, 318, 162, 318, 190, 4, 190), PackedVector2Array(64, 58, 80, 58, 80, 70, 64, 70), PackedVector2Array(74, 119, 109, 102, 109, 119)]
 biases = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 [node name="PositionHelper" type="Node2D" parent="Sheep Spawner/PointSampler"]
@@ -148,10 +149,9 @@ script = ExtResource("8_ptatx")
 
 [node name="PlayerEntriesWrapper" type="Control" parent="HUD"]
 anchors_preset = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 176.0
-offset_bottom = 208.0
+offset_top = 48.0
+offset_right = 160.0
+offset_bottom = 240.0
 
 [node name="PlayerEntries" parent="HUD/PlayerEntriesWrapper" instance=ExtResource("12_l2ixg")]
 layout_mode = 1
@@ -161,6 +161,22 @@ anchor_bottom = 1.0
 offset_top = -11.0
 offset_right = 80.0
 grow_vertical = 0
+
+[node name="SaveReplay" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 252.0
+offset_top = 40.0
+offset_right = 352.0
+offset_bottom = 240.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/SaveReplay"]
+layout_mode = 0
+offset_right = 76.0
+offset_bottom = 166.0
+alignment = 2
+script = ExtResource("13_ejbhc")
+save_button_scene_path = "res://main/save_button.tscn"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_2pwcm")
@@ -183,7 +199,9 @@ script = ExtResource("14_5l3r1")
 [connection signal="tick" from="Timer" to="CountdownSoundPlayer" method="_on_timer_tick"]
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
 [connection signal="corralled" from="Corral" to="HUD/Sheep Coralled/Count" method="_on_corralled"]
+[connection signal="won" from="Corral" to="." method="_on_won"]
 [connection signal="won" from="Corral" to="Win" method="_on_win"]
 [connection signal="won" from="Corral" to="HUD/Time/Display" method="_on_win"]
+[connection signal="spawned" from="Sheep Spawner" to="." method="_on_sheep_spawned"]
 [connection signal="returning_to_lobby" from="Esc Handler" to="." method="_on_esc_handler_returning_to_lobby"]
 [connection signal="server_someone_returning_to_lobby" from="Esc Handler" to="." method="_server_on_esc_handler_someone_returning_to_lobby"]

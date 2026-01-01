@@ -68,14 +68,15 @@ graph_offset = Vector2(-16, 22)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gkjci"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
+properties/0/replication_mode = 1
 properties/1/path = NodePath("Sprite:modulate")
 properties/1/spawn = true
-properties/1/sync = false
-properties/1/watch = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:player_name")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
-[node name="Shepherd" type="Area2D"]
+[node name="Shepherd" type="Area2D" groups=["Shepherd"]]
 script = ExtResource("1_0m0kh")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -91,15 +92,14 @@ frame = 103
 shape = SubResource("CircleShape2D_ks11o")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-speed_scale = 2.0
 libraries = {
 "": SubResource("AnimationLibrary_i0re8")
 }
+speed_scale = 2.0
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_evkfo")
 anim_player = NodePath("../AnimationPlayer")
-active = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
