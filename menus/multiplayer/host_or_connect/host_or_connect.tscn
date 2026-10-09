@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://beoa2e6h02jrx"]
+[gd_scene load_steps=6 format=3 uid="uid://beoa2e6h02jrx"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_rmarm"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_frfri"]
+[ext_resource type="PackedScene" uid="uid://c4f05uobbc5jl" path="res://volume.tscn" id="3_1m80c"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_boa2d"]
 keycode = 4194305
@@ -46,3 +47,8 @@ layout_mode = 2
 shortcut = SubResource("Shortcut_u4rhf")
 text = "Return"
 next_scene_path = "res://menus/main_menu/main_menu.tscn"
+
+[node name="Volume" parent="." instance=ExtResource("3_1m80c")]
+layout_mode = 1
+offset_left = 267.0
+offset_right = 0.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0von5qosiwce"]
+[gd_scene load_steps=19 format=3 uid="uid://d0von5qosiwce"]
 
 [ext_resource type="PackedScene" uid="uid://7n6tlswyxt83" path="res://main/floor/floor.tscn" id="1_bgaf8"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_pwk4a"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://main/esc_handler.gd" id="13_hwrso"]
 [ext_resource type="Script" path="res://main/countdown_sound_player.gd" id="14_5l3r1"]
 [ext_resource type="AudioStream" uid="uid://iatvh2oph2y0" path="res://main/audio/wood_hit_3.wav" id="14_ylywf"]
+[ext_resource type="PackedScene" uid="uid://c4f05uobbc5jl" path="res://volume.tscn" id="17_hwg87"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7kos"]
 properties/0/path = NodePath("HUD/Time/Display:text")
@@ -175,6 +176,12 @@ main_menu_path = "res://menus/main_menu/main_menu.tscn"
 process_mode = 2
 stream = ExtResource("14_ylywf")
 script = ExtResource("14_5l3r1")
+
+[node name="Volume" parent="." instance=ExtResource("17_hwg87")]
+offset_left = 138.0
+offset_top = 222.0
+offset_right = 138.0
+offset_bottom = 222.0
 
 [connection signal="kickoff" from="." to="HUD/Countdown" method="_on_main_kickoff"]
 [connection signal="kickoff" from="Timer" to="HUD/Time/Display" method="_on_timer_kickoff"]

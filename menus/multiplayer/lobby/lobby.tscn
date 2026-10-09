@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://brgccxw0jm4dm"]
+[gd_scene load_steps=11 format=3 uid="uid://brgccxw0jm4dm"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_27ufc"]
 [ext_resource type="Script" path="res://menus/multiplayer/lobby/lobby.gd" id="1_cs560"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_r1ybc"]
 [ext_resource type="PackedScene" uid="uid://d2iu6ovs4sakc" path="res://menus/multiplayer/color_selector.tscn" id="3_iwvf6"]
 [ext_resource type="PackedScene" uid="uid://dbhlrfaxpqmfu" path="res://menus/multiplayer/lobby/player_entries.tscn" id="4_jslqw"]
+[ext_resource type="PackedScene" uid="uid://c4f05uobbc5jl" path="res://volume.tscn" id="6_dvw6w"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_saqb5"]
 keycode = 4194309
@@ -64,6 +65,11 @@ layout_mode = 2
 shortcut = SubResource("Shortcut_fedri")
 text = "Return"
 script = null
+
+[node name="Volume" parent="." instance=ExtResource("6_dvw6w")]
+layout_mode = 1
+offset_left = 267.0
+offset_right = 0.0
 
 [connection signal="color_changed" from="CenterContainer/VBoxContainer/ColorSelector" to="." method="_on_color_selector_color_changed"]
 [connection signal="color_changed_debounced" from="CenterContainer/VBoxContainer/ColorSelector" to="." method="_on_color_selector_color_changed_debounced"]

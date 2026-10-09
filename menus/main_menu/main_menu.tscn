@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlh8jm3hdtx4r"]
+[gd_scene load_steps=7 format=3 uid="uid://dlh8jm3hdtx4r"]
 
 [ext_resource type="Texture2D" uid="uid://bfhbviaky3jmm" path="res://menus/sprites/background.jpg" id="1_0lbbv"]
 [ext_resource type="Script" path="res://menus/main_menu/main_menu.gd" id="1_jk7rs"]
 [ext_resource type="PackedScene" uid="uid://xvtrv8cttec7" path="res://menus/go_to_scene_button.tscn" id="2_csg7n"]
 [ext_resource type="JSON" path="res://version.tres" id="2_o3dwh"]
+[ext_resource type="PackedScene" uid="uid://c4f05uobbc5jl" path="res://volume.tscn" id="6_esi4v"]
 [ext_resource type="Script" path="res://menus/main_menu/quit_button.gd" id="7_frk4o"]
 
 [node name="Main Menu" type="Control"]
@@ -72,6 +73,11 @@ offset_right = 160.0
 offset_bottom = 240.0
 text = "v0.0.0 [abcdefghij]"
 flat = true
+
+[node name="Volume" parent="." instance=ExtResource("6_esi4v")]
+layout_mode = 1
+offset_left = 267.0
+offset_right = 0.0
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="CenterContainer/VBoxContainer/VBoxContainer/Quit" method="_on_pressed"]
 [connection signal="pressed" from="Version" to="." method="_on_version_pressed"]
